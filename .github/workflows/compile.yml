@@ -19,7 +19,6 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
-          cache: 'pip'
 
       - name: Install Scientific Dependencies
         run: |
@@ -28,7 +27,7 @@ jobs:
 
       - name: Execute All Analysis Pipelines
         run: |
-          for dir in Lab-Phy-2/*; do
+          for dir in [0-9]*/; do
             if [ -d "$dir" ] && [ -f "$dir/analysis.py" ]; then
               echo "=== Running $dir/analysis.py ==="
               (cd "$dir" && python analysis.py)
@@ -37,7 +36,7 @@ jobs:
 
       - name: Verify Generated Plots
         run: |
-          total_plots=$(find Lab-Phy-2/*/plots -name "*.pdf" 2>/dev/null | wc -l)
+          total_plots=$(find [0-9]*/plots -name "*.pdf" 2>/dev/null | wc -l)
           echo "Total generated PDF plots: $total_plots"
           if [ "$total_plots" -eq 0 ]; then
             echo "Error: No plots were generated!"
