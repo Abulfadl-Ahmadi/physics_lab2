@@ -1,0 +1,729 @@
+\documentclass[a4paper, 11pt]{article}
+\usepackage[
+    top=0.75in,
+    bottom=1in,
+    left=0.75in,
+    right=0.75in
+]{geometry}
+\usepackage{graphicx, tabularx, hyperref, amsmath, wrapfig}
+\usepackage[usenames,dvipsnames]{color,xcolor}
+\usepackage{listings}
+\usepackage[siunitx]{circuitikz}
+\usepackage{booktabs}
+\usepackage{pgfplotstable, pgfplots}
+%\renewcommand{\arraystretch}{1.2}
+\linespread{1.2}
+\selectfont
+\usepackage{xepersian}
+\settextfont[Scale=0.9]{Dibaj}
+\setdigitfont[Scale=1]{Dibaj}
+
+\lstset{
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue},
+    commentstyle=\color{green!50!black},
+    stringstyle=\color{red!70!black},
+    numbers=left,
+    numberstyle=\tiny,
+    stepnumber=1,
+    breaklines=true,
+    frame=single
+}
+
+
+\begin{document}
+
+\begin{center}
+\textbf{{\huge گزارش‌کار آزمایش شمارهٔ
+5:
+نیروی وارد بر سیم حامل جریان در میدان مغناطیسی
+}}
+
+\end{center}
+
+\hrule
+\noindent\begin{tabular}{rrl}
+اعضای گروه: & ابوالفضل احمدی & 403172283\\
+& نام و نام‌خانوادگی & 403001122
+\end{tabular}\hfill
+\begin{tabular}{rr}
+تاریخ انجام آزمایش: & 15/09/1404 \\
+دستیار آموزشی: & امیری‌نژاد \\
+\end{tabular}\hfill
+\begin{tabular}{rr}
+گروه:  & 3  \\
+زیرگروه: &  \lr{A}  \\
+\end{tabular}
+\hrule
+
+\section{اهداف و خلاصهٔ شرح آزمایش}
+
+هدف اصلی، بررسی تجربی رابطهٔ نیروی مغناطیسی وارد بر سیم حامل جریان با سه متغیر کلیدی است: زاویهٔ بین جریان و میدان \lr{$B$}، طول مؤثر رسانا \lr{$L$} و شدت جریان‌های \lr{$i$} و \lr{$I_m$}. برای این منظور:
+\begin{itemize}
+    \item در بخش نخست، با تغییر جهت میدان نسبت به جریان، وابستگی \lr{$F \propto \sin\theta$} آزموده شد و بیشینهٔ نیرو در حالت عمودیت اندازه‌گیری گردید.
+    \item در بخش دوم، با ثابت نگه‌داشتن \lr{$i$} و \lr{$B$} و تغییر طول بخش قرارگرفته در میدان، خطی بودن \lr{$F \propto L$} بررسی و از شیب خط، میدان مغناطیسی محاسبه شد.
+    \item در بخش سوم، برای طول ثابت، نیروی مغناطیسی بر حسب جریان حلقه \lr{$i$} اندازه‌گیری و خطی بودن \lr{$F \propto i$} و مقدار \lr{$B$} استخراج شد.
+    \item در بخش چهارم، با ثابت بودن \lr{$i$} و \lr{$L$}، وابستگی نیرو به جریان سیم‌پیچ‌های میدان \lr{$I_m$} سنجیده شد تا رابطهٔ \lr{$B \propto I_m$} و ضریب تبدیل میدان محاسبه شود.
+\end{itemize}
+
+جمع‌بندی نتایج نشان داد نیروی اندازه‌گیری‌شده در هر سه متغیر مستقل رفتار خطی مورد انتظار را (در بازهٔ کاری آزمایش) نشان می‌دهد و مقادیر میدان مغناطیسی به‌دست‌آمده از روش‌های مختلف در یک مرتبهٔ بزرگی (چند میلی‌تسلا) سازگارند؛ انحراف‌های کوچک به خطای صفر ترازو، ناهمگنی میدان و تلرانس تجهیزات نسبت داده شد.
+
+\section{بستگی نیروی $F$ به زاویه بین سیم حامل جریان $i$ و میدان مغناطیسی $B$}
+
+ شکاف بین قطب‌ها را حدود \lr{4\,cm} قرار دادیم و جریان عبوری از سیم‌پیچ‌ها $(I_m)$ را روی صفر 
+تنظیم کردیم. حلقه سیم \lr{$L = 2/5\,\mathrm{cm}$} را طوری در میدان مغناطیسی قرار دادیم که ضلع افقی آن هم‌راستا با میدان باشد. 
+
+قبل از اعمال میدان، ترازو را در حالت تعادل تنظیم کردیم. سپس جریان در حلقه سیم را تا حداکثر \lr{4\,A} افزایش دادیم و جهت جریان را طوری انتخاب کردیم که نیروی وارد بر حلقه به سمت زمین باشد؛ در این وضعیت عقربه ترازو جابه‌جا شد.
+
+وقتی از حلقهٔ سیم جریانی به اندازهٔ 
+$I$
+ عبور دهیم و بخش افقی حلقه را در ناحیه‌ای قرار دهیم که میدان مغناطیسی 
+$\vec{B}$
+ وجود دارد، به آن بخش نیروی مغناطیسی وارد می‌شود:
+\begin{equation}
+\vec F = I \, \vec L \times \vec B
+\end{equation}
+
+اگر طول بخش افقی سیم را $L$ بگیریم و آن را طوری قرار دهیم که جهت جریان عمود بر $\vec B$ باشد و جهت جریان را طوری انتخاب کنیم که نیروی وارد بر حلقه به سمت زمین باشد، آنگاه بزرگی نیرو می‌شود:
+
+\begin{equation}
+F = I L B \sin\theta
+\label{eq1}
+\end{equation}
+
+که در این آزمایش $\theta = 90^\circ$ است، پس:
+\begin{equation}
+F = I L B
+\end{equation}
+این نیرو رو به پایین بر حلقه وارد می‌شود.
+
+در این حالت نیروی مغناطیسی حلقه رو به پایین است و به‌صورت افزایش وزن مؤثر روی ترازو دیده می‌شود؛ بنابراین عقربه از تعادل اولیه جابه‌جا می‌شود و نیروی عمودی خالصی که ترازو باید تحمل کند تغییر می‌کند.
+
+سیم‌پیچ‌های اصلی، میدان مغناطیسی $\vec B$ را بین قطب‌ها ایجاد می‌کنند. وقتی شما این جریان را زیاد می‌کنید:
+\begin{equation}
+B \propto I_m
+\end{equation}
+یعنی میدان مغناطیسی بین قطب‌ها بزرگ‌تر می‌شود.
+
+اما حلقهٔ کوچک حامل جریان (با جریان $I_L$) در این میدان قرار دارد. بنابراین نیروی وارد بر حلقه:
+\begin{equation}
+F = I_L \, L \, B
+\end{equation}
+
+پس اگر $I_m$  را زیاد کنیم $\vec B$ زیاد می‌شود، نیروی وارد بر حلقه تغییر می‌کند و در نتیجه ترازو نیروی عمودی بیشتری حس می‌کند. به همین ترتیب، وقتی جریان عبوری از سیم‌پیچ‌ها $(I_m)$ را تا حداکثر \lr{2\,A} افزایش دادیم نیز جابه‌جایی عقربه مشاهده شد.
+
+با چرخاندن هستهٔ \lr{U} شکل حول محور قائم (در حالی که حلقهٔ سیم ثابت است) زاویهٔ میان جریان و میدان عوض می‌شود و انحراف ترازو تغییر می‌کند. طبق رابطهٔ \ref{eq1} اگر $\theta = 0^\circ$ یا $180^\circ$ باشد، $\sin\theta = 0$ و نیرو تقریباً صفر است و ترازو به تعادل برمی‌گردد؛ برای $\theta = 90^\circ$، $\sin\theta = 1$ و بیشترین انحراف عقربه دیده می‌شود.
+
+\section{بستگی نیروی $F$ به طول سیم $L$}
+
+شکاف بین قطب‌ها را حدود یک سانتیمتر قرار دادیم و جریان عبوری از سیم‌پیچ‌ها $I_m$ را روی صفر تنظیم کردیم. حلقه سیم را در میدان مغناطیسی طوری قرار دادیم که ضلع افقی آن عمود بر راستای میدان مغناطیسی باشد. جریان عبوری از سیم‌پیچ‌ها را تا $I_m=2\,\mathrm{A}$ افزایش دادیم. پیش از برقراری جریان در حلقه سیم، ترازو را در حالت تعادل تنظیم کردیم و سپس ماکزیمم جریان $i=4\,\mathrm{A}$ را در حلقه برقرار کردیم.
+
+بعد از عبور جریان از حلقه سیم، به علت نیروی وارده به حلقه، وضعیت تعادل به‌هم خورد؛ دوباره ترازو را صفر کردیم و اختلاف نیرو را در دو حالت به‌دست آوردیم. این کار را برای حلقه‌هایی با طول‌های مختلف تکرار و مشاهدات را در جدول ثبت کردیم.  
+
+%\end{wraptable}{l}{4cm} % r = راست جدول، 4cm = پهنای جدول
+%\vspace{-10pt} % برای تنظیم فاصله عمودی (اختیاری)
+\begin{table}[h!]
+\caption{}
+\label{tab2}
+\centering
+\begin{tabular}{cc}
+\hline
+$L \;[\mathrm{cm}]$ & $\Delta F \;[\mathrm{mN}]$ \\
+\hline
+$1.25$ & $0.95$ \\
+$2.50$ & $1.68$ \\
+$5.00$ & $2.74$ \\
+$10.00$ & $5.16$ \\
+\hline
+\multicolumn{2}{c}{$I_m = 2\mathrm{A}$ , $i = 4\mathrm{A}$}
+\end{tabular}
+\end{table}
+%\end{wraptable}
+
+شکل منحنی نمایش تغییرات $F$ بر حسب $L$ را نشان می‌دهد.
+
+\begin{figure}[h]
+\caption{{$\Delta F$ برحسب $L$}}
+\label{fig:LF}
+\centering
+\pgfplotsset{
+    width=9cm,
+    height=5cm,
+    scale only axis,
+    tick align = outside,
+    yticklabel style={/pgf/number format/fixed},
+}
+
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel={\lr{[$\mathrm{cm}$]} طول $L$},
+    ylabel={\lr{[$\mathrm{mN}$]} $\Delta F$},
+    xmin=0, xmax=10.5,
+    ymin=0, ymax=5.5,
+    xtick distance=2,
+    ymajorgrids=true,
+    xmajorgrids=true,
+    grid style=dashed,
+    smooth,
+	legend pos=north west,
+    mark size=2.5pt,
+    xticklabel style={
+        /pgf/number format/fixed,
+        /pgf/number format/precision=0
+    },
+]
+
+\addplot[
+    mark=square,
+    only marks
+]
+coordinates {
+    (1.25, 0.95)
+    (2.50, 1.68)
+    (5.00, 2.74)
+    (10.00, 5.16)
+};
+
+\addplot[
+    smooth,
+    domain=0:10.5,
+    samples=100
+]
+{ 0.475 * x + 0.407 };
+
+\legend{داده‌های تجربی, 
+$y=0.475 x + 0.407$
+}
+
+\end{axis}
+\end{tikzpicture}
+\end{figure}
+
+ انتظار نظری بر اساس رابطهٔ
+\begin{equation}
+F = i\,L\,B
+\end{equation}
+این است که برای جریان ثابت \lr{$i$} و میدان مغناطیسی یکنواخت \lr{$B$}، نیروی مغناطیسی با طول رسانای قرارگرفته در میدان رابطه‌ای خطی داشته باشد. بنابراین، می‌توان مدل خطی زیر را برای داده‌ها در نظر گرفت:
+\begin{equation}
+\Delta F_i = a\,L_i + b,
+\end{equation}
+که در آن \lr{$a$} شیب خط و \lr{$b$} عرض از مبدأ (نشان‌دهندهٔ خطای سیستماتیک یا نیروی اضافی مستقل از طول) است. هدف، تعیین \lr{$a$} و \lr{$b$} به روش کمینه مربعات و سپس استفاده از شیب خط برای محاسبهٔ میدان مغناطیسی \lr{$B$} است.
+
+\paragraph{فرمول‌های روش کمینه مربعات برای خط راست}
+برای \lr{$n$} نقطهٔ داده \lr{$(L_i,\Delta F_i)$}، ضرایب خط برازش‌یافته \lr{$\Delta F = aL + b$} در روش کمینه مربعات از روابط زیر به‌دست می‌آیند:
+\begin{align}
+a &= \frac{n\sum L_i\,\Delta F_i - \left(\sum L_i\right)\left(\sum \Delta F_i\right)}
+         {n\sum L_i^2 - \left(\sum L_i\right)^2}, \\
+b &= \frac{\left(\sum \Delta F_i\right)\left(\sum L_i^2\right) - \left(\sum L_i\right)\left(\sum L_i\,\Delta F_i\right)}
+         {n\sum L_i^2 - \left(\sum L_i\right)^2}.
+\end{align}
+
+\paragraph{محاسبهٔ کمیت‌های میانی}
+ابتدا مجموع‌ها و حاصل‌ضرب‌های لازم را محاسبه می‌کنیم:
+\begin{align}
+\sum L_i &= 1.25 + 2.50 + 5.00 + 10.00 = 18.75~\mathrm{cm}, \\
+\sum \Delta F_i &= 0.95 + 1.68 + 2.74 + 5.16 = 10.53~\mathrm{mN}, \\
+\sum L_i^2 &= 1.25^2 + 2.50^2 + 5.00^2 + 10.00^2 
+           = 1.5625 + 6.25 + 25 + 100 
+           = 132.8125~\mathrm{cm}^2, \\
+\sum L_i\,\Delta F_i &= 1.25\times 0.95 + 2.50\times 1.68 + 5.00\times 2.74 + 10.00\times 5.16 \nonumber\\
+&= 1.1875 + 4.20 + 13.70 + 51.60 
+= 70.6875~\mathrm{cm\,mN}.
+\end{align}
+
+همچنین مخرج مشترک در هر دو فرمول \lr{$a$} و \lr{$b$} برابر است با:
+\begin{align}
+D &= n\sum L_i^2 - \left(\sum L_i\right)^2 \nonumber\\
+  &= 4\times 132.8125 - (18.75)^2 \nonumber\\
+  &= 531.25 - 351.5625 = 179.6875.
+\end{align}
+
+\paragraph{محاسبهٔ شیب و عرض از مبدأ}
+اکنون با جایگذاری مقادیر عددی، شیب \lr{$a$} را به‌دست می‌آوریم:
+\begin{align}
+a &= \frac{n\sum L_i\,\Delta F_i - \left(\sum L_i\right)\left(\sum \Delta F_i\right)}
+         {D} \nonumber\\
+  &= \frac{4\times 70.6875 - 18.75\times 10.53}{179.6875} \nonumber\\
+  &= \frac{282.75 - 197.44}{179.6875} \approx \frac{85.31}{179.69} \approx 0.475~\frac{\mathrm{mN}}{\mathrm{cm}}.
+\end{align}
+
+عرض از مبدأ \lr{$b$} نیز از رابطهٔ زیر به‌دست می‌آید:
+\begin{align}
+b &= \frac{\left(\sum \Delta F_i\right)\left(\sum L_i^2\right) - \left(\sum L_i\right)\left(\sum L_i\,\Delta F_i\right)}
+         {D} \nonumber\\
+  &= \frac{10.53\times 132.8125 - 18.75\times 70.6875}{179.6875} \nonumber\\
+  &\approx \frac{1398.6 - 1325.5}{179.6875} \approx \frac{73.1}{179.69} \approx 0.407~\mathrm{mN}.
+\end{align}
+
+بنابراین، خط برازش‌یافته به داده‌ها در واحدهای \lr{cm} و \lr{mN} به صورت زیر نوشته می‌شود:
+\begin{equation}
+\Delta F~[\mathrm{mN}] \;\approx\; 0.475~\frac{\mathrm{mN}}{\mathrm{cm}}\; L~[\mathrm{cm}] \;+\; 0.407~\mathrm{mN}.
+\end{equation}
+
+عرض از مبدأ نسبتاً کوچک است و می‌تواند ناشی از خطای صفر ترازو، ناهمگنی میدان، یا عدم دقت در قرائت باشد. با این حال، برای تعیین میدان مغناطیسی \lr{$B$}، عمدتاً از شیب خط استفاده می‌کنیم.
+
+\paragraph{تبدیل شیب به دستگاه SI}
+برای استفاده در رابطهٔ نظری \lr{$F = iLB$}، لازم است شیب خط در دستگاه \lr{SI} یعنی \lr{N/m} بیان شود. با توجه به اینکه
+\[
+1~\mathrm{mN} = 10^{-3}~\mathrm{N}, 
+\qquad
+1~\mathrm{cm} = 10^{-2}~\mathrm{m},
+\]
+داریم:
+\begin{equation}
+1~\frac{\mathrm{mN}}{\mathrm{cm}} = \frac{10^{-3}~\mathrm{N}}{10^{-2}~\mathrm{m}} = 10^{-1}~\frac{\mathrm{N}}{\mathrm{m}}.
+\end{equation}
+بنابراین شیب به واحد \lr{N/m} برابر خواهد بود با:
+\begin{equation}
+a_{\mathrm{SI}} = 0.475~\frac{\mathrm{mN}}{\mathrm{cm}} 
+\;\approx\; 0.475\times 10^{-1}~\frac{\mathrm{N}}{\mathrm{m}}
+\;\approx\; 0.0475~\frac{\mathrm{N}}{\mathrm{m}}.
+\end{equation}
+
+\paragraph{محاسبهٔ میدان مغناطیسی \texorpdfstring{$B$}{B}}
+با توجه به رابطهٔ نظری
+\begin{equation}
+F = i\,L\,B \quad\Rightarrow\quad \frac{F}{L} = i\,B,
+\end{equation}
+شیب نمودار \lr{$F$} برحسب \lr{$L$} در دستگاه \lr{SI} همان \lr{$\dfrac{F}{L}$} است و بنابراین:
+\begin{equation}
+a_{\mathrm{SI}} = i\,B \quad\Rightarrow\quad B = \frac{a_{\mathrm{SI}}}{i}.
+\end{equation}
+با جایگذاری \lr{$a_{\mathrm{SI}} \approx 0.0475~\mathrm{N/m}$} و \lr{$i = 4~\mathrm{A}$} به‌دست می‌آوریم:
+\begin{align}
+B &= \frac{0.0475~\mathrm{N/m}}{4~\mathrm{A}} 
+   \approx 0.0119~\mathrm{T} \\
+  &\approx 1.19\times 10^{-2}~\mathrm{T} 
+   \;\approx\; 11.9~\mathrm{mT}.
+\end{align}
+
+در نتیجه، با استفاده از روش کمینه مربعات برای برازش خط به داده‌های \lr{$\Delta F$} برحسب \lr{$L$} و با ثابت نگه‌داشتن جریان \lr{$i = 4\,\mathrm{A}$}، شیب خط در دستگاه \lr{SI} برابر \lr{$a_{\mathrm{SI}} \approx 0.0475~\mathrm{N/m}$} به‌دست آمد و از آن میدان مغناطیسی ناحیهٔ بین قطب‌ها به صورت
+\begin{equation}
+B \approx 0.0119~\mathrm{T} \;(\approx 11.9~\mathrm{mT})
+\end{equation}
+محاسبه شد. این نتیجه با انتظار نظری مبنی بر تناسب خطی نیروی مغناطیسی با طول رسانای قرارگرفته در میدان برای جریان ثابت سازگار است.
+
+
+\section{بستگی نیروی $F$ به جریان $i$}
+
+شکاف بین قطب‌ها را حدود یک سانتیمتر تنظیم کرده و جریان سیم‌پیچ‌ها را روی مقدار صفر \lr{($I_m = 0$)} قرار دادیم. حلقهٔ سیم با طول \lr{$L = 10\,\mathrm{cm}$} را به‌گونه‌ای در میدان مغناطیسی قرار دادیم که ضلع افقی آن عمود بر راستای میدان باشد. سپس جریان سیم‌پیچ‌ها را تا مقدار بیشینه \lr{$I_m = 2\,\mathrm{A}$} افزایش دادیم و پیش از اعمال جریان به حلقهٔ سیم، ترازو را در حالت تعادل تنظیم کردیم. در ادامه، جریان عبوری از حلقه \lr{$i$} را به‌تدریج افزایش دادیم و با استفاده از ترازو، نیروی وارد بر حلقهٔ سیم را اندازه‌گیری کردیم. نتایج اندازه‌گیری در جدول ثبت شد و آزمایش برای مقادیر مختلف جریان \lr{$i$} تکرار گردید.
+
+%\end{wraptable}{l}{4cm} % r = راست جدول، 4cm = پهنای جدول
+%\vspace{-10pt} % برای تنظیم فاصله عمودی (اختیاری)
+\begin{table}[h!]
+\caption{}
+\label{tab1}
+\centering
+\begin{tabular}{cc}
+\hline
+$i \;[\mathrm{A}]$ & $\Delta F \;[\mathrm{mN}]$ \\
+\hline
+$1.00$ & $0.23$ \\
+$2.00$ & $0.46$ \\
+$3.00$ & $1.91$ \\
+$4.00$ & $3.16$ \\
+\hline
+\multicolumn{2}{c}{$I_m = 2\mathrm{A}$ , $L = 10 \mathrm{cm}$}
+\end{tabular}
+\end{table}
+%\end{wraptable}
+
+ در شکل منحنی تغییرات نیروی \lr{F} بر حسب جریان \lr{i} ترسیم شده است.
+
+\begin{figure}[h]
+\caption{{$\Delta F$ برحسب $i$}}
+\label{fig:iF}
+\centering
+\pgfplotsset{
+    width=9cm,
+    height=5cm,
+    scale only axis,
+    tick align = outside,
+    yticklabel style={/pgf/number format/fixed},
+}
+
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel={\lr{[$\mathrm{A}$]} جریان $i$},
+    ylabel={\lr{[$\mathrm{mN}$]} $\Delta F$},
+    xmin=0, xmax=4.2,
+    ymin=0, ymax=3.5,
+    xtick distance=1,
+    ymajorgrids=true,
+    xmajorgrids=true,
+    grid style=dashed,
+	legend pos=north west,
+    smooth,
+    mark size=2.5pt,
+    xticklabel style={
+        /pgf/number format/fixed,
+        /pgf/number format/precision=0
+    },
+]
+
+\addplot[
+    mark=square,
+    smooth,
+	only marks
+]
+coordinates {
+    (1.00, 0.23)
+    (2.00, 0.46)
+    (3.00, 1.91)
+    (4.00, 3.16)
+};
+
+\addplot[
+    smooth,
+    domain=0:4.5,
+    samples=100
+]
+{ 1.024 * x - 1.12 };
+
+\legend{\rl{داده‌های تجربی},
+$y=1.024 x - 1.12$
+}
+
+\end{axis}
+\end{tikzpicture}
+\end{figure}
+
+
+
+ بر اساس رابطهٔ نظری
+\begin{equation}
+F = i\,L\,B,
+\end{equation}
+برای طول ثابت \lr{$L$} و میدان مغناطیسی یکنواخت \lr{$B$}، انتظار می‌رود نیروی مغناطیسی با جریان \lr{$i$} رابطه‌ای خطی داشته باشد. از این‌رو، می‌توان مدل خطی زیر را برای داده‌ها در نظر گرفت:
+\begin{equation}
+\Delta F_i = a\,i_i + b,
+\end{equation}
+که در آن \lr{$a$} شیب خط و \lr{$b$} عرض از مبدأ است. هدف، به‌دست‌آوردن \lr{$a$} و \lr{$b$} به روش کمینه مربعات و سپس استفاده از شیب خط برای محاسبهٔ میدان مغناطیسی \lr{$B$} است.
+
+\paragraph{فرمول‌های روش کمینه مربعات برای خط راست}
+برای \lr{$n$} نقطهٔ دادهٔ \lr{$(i_i,\Delta F_i)$}، ضرایب خط برازش‌یافته \lr{$\Delta F = a i + b$} در روش کمینه مربعات به صورت زیر است:
+\begin{align}
+a &= \frac{n\sum i_i\,\Delta F_i - \left(\sum i_i\right)\left(\sum \Delta F_i\right)}
+         {n\sum i_i^2 - \left(\sum i_i\right)^2}, \\
+b &= \frac{\left(\sum \Delta F_i\right)\left(\sum i_i^2\right) - \left(\sum i_i\right)\left(\sum i_i\,\Delta F_i\right)}
+         {n\sum i_i^2 - \left(\sum i_i\right)^2}.
+\end{align}
+
+\paragraph{محاسبهٔ کمیت‌های میانی}
+ابتدا مجموع‌ها و حاصل‌ضرب‌های لازم را محاسبه می‌کنیم:
+\begin{align}
+\sum i_i &= 1.00 + 2.00 + 3.00 + 4.00 = 10.00~\mathrm{A}, \\
+\sum \Delta F_i &= 0.23 + 0.46 + 1.91 + 3.16 = 5.76~\mathrm{mN}, \\
+\sum i_i^2 &= 1.00^2 + 2.00^2 + 3.00^2 + 4.00^2 
+           = 1 + 4 + 9 + 16 
+           = 30.00~\mathrm{A}^2, \\
+\sum i_i\,\Delta F_i &= 1.00\times 0.23 + 2.00\times 0.46 + 3.00\times 1.91 + 4.00\times 3.16 \nonumber\\
+&= 0.23 + 0.92 + 5.73 + 12.64 
+= 19.52~\mathrm{A\,mN}.
+\end{align}
+
+مخرج مشترک در فرمول‌های \lr{$a$} و \lr{$b$} به صورت زیر است:
+\begin{align}
+D &= n\sum i_i^2 - \left(\sum i_i\right)^2 \nonumber\\
+  &= 4\times 30.00 - (10.00)^2 \nonumber\\
+  &= 120.00 - 100.00 = 20.00.
+\end{align}
+
+\paragraph{محاسبهٔ شیب و عرض از مبدأ}
+اکنون با قرار دادن مقادیر عددی، شیب \lr{$a$} را محاسبه می‌کنیم:
+\begin{align}
+a &= \frac{n\sum i_i\,\Delta F_i - \left(\sum i_i\right)\left(\sum \Delta F_i\right)}
+         {D} \nonumber\\
+  &= \frac{4\times 19.52 - 10.00\times 5.76}{20.00} \nonumber\\
+  &= \frac{78.08 - 57.60}{20.00} 
+   = \frac{20.48}{20.00} 
+   = 1.024~\frac{\mathrm{mN}}{\mathrm{A}}.
+\end{align}
+
+عرض از مبدأ \lr{$b$} نیز از رابطهٔ زیر به‌دست می‌آید:
+\begin{align}
+b &= \frac{\left(\sum \Delta F_i\right)\left(\sum i_i^2\right) - \left(\sum i_i\right)\left(\sum i_i\,\Delta F_i\right)}
+         {D} \nonumber\\
+  &= \frac{5.76\times 30.00 - 10.00\times 19.52}{20.00} \nonumber\\
+  &= \frac{172.80 - 195.20}{20.00} 
+   = \frac{-22.40}{20.00} 
+   = -1.12~\mathrm{mN}.
+\end{align}
+
+در نتیجه، خط برازش‌یافته به داده‌های جدول \ref{tab1} (در واحدهای \lr{A} و \lr{mN}) به صورت زیر نوشته می‌شود:
+\begin{equation}
+\Delta F~[\mathrm{mN}] \;\approx\; 1.024~\frac{\mathrm{mN}}{\mathrm{A}}\; i~[\mathrm{A}] \;-\; 1.12~\mathrm{mN}.
+\end{equation}
+مقدار غیرصفر و منفی عرض از مبدأ می‌تواند ناشی از خطای صفر ترازو، خطاهای سیستماتیک، یا عدم دقت در قرائت داده‌ها باشد؛ با این حال، برای محاسبهٔ میدان مغناطیسی \lr{$B$}، تمرکز اصلی بر روی شیب خط است.
+
+\paragraph{تبدیل شیب به دستگاه \lr{SI}}
+برای استفاده در رابطهٔ نظری \lr{$F = iLB$}، لازم است شیب خط در دستگاه \lr{SI} یعنی \lr{N/A} بیان شود. با توجه به اینکه
+\[
+1~\mathrm{mN} = 10^{-3}~\mathrm{N},
+\]
+داریم:
+\begin{equation}
+1~\frac{\mathrm{mN}}{\mathrm{A}} = 10^{-3}~\frac{\mathrm{N}}{\mathrm{A}},
+\end{equation}
+بنابراین شیب در دستگاه \lr{SI} برابر است با:
+\begin{equation}
+a_{\mathrm{SI}} = 1.024~\frac{\mathrm{mN}}{\mathrm{A}}
+\;\approx\; 1.024\times 10^{-3}~\frac{\mathrm{N}}{\mathrm{A}}.
+\end{equation}
+
+\paragraph{محاسبهٔ میدان مغناطیسی \texorpdfstring{$B$}{B}}
+رابطهٔ نظری بین نیرو، جریان، طول و میدان مغناطیسی به صورت
+\begin{equation}
+F = i\,L\,B
+\end{equation}
+نوشته می‌شود. برای طول ثابت \lr{$L$}، شیب نمودار \lr{$F$} بر حسب \lr{$i$} در دستگاه \lr{SI} برابر با
+\begin{equation}
+\frac{F}{i} = L\,B
+\end{equation}
+است؛ یعنی:
+\begin{equation}
+a_{\mathrm{SI}} = L\,B \quad\Rightarrow\quad B = \frac{a_{\mathrm{SI}}}{L}.
+\end{equation}
+در این آزمایش، طول حلقه برابر \lr{$L = 10\,\mathrm{cm} = 0.10\,\mathrm{m}$} است، بنابراین:
+\begin{align}
+B &= \frac{1.024\times 10^{-3}~\mathrm{N/A}}{0.10~\mathrm{m}} \nonumber\\
+  &= 1.024\times 10^{-2}~\mathrm{T} \nonumber\\
+  &\approx 0.010~\mathrm{T} \;\approx\; 10.2~\mathrm{mT}.
+\end{align}
+
+بدین‌ترتیب، با استفاده از روش کمینه مربعات برای برازش خط به داده‌های \lr{$\Delta F$} بر حسب جریان \lr{$i$} (برای \lr{$I_m = 2\,\mathrm{A}$} و \lr{$L = 10\,\mathrm{cm}$})، شیب خط در دستگاه \lr{SI} برابر با \lr{$a_{\mathrm{SI}} \approx 1.024\times 10^{-3}~\mathrm{N/A}$} به‌دست آمد و از آن میدان مغناطیسی ناحیهٔ بین قطب‌ها به صورت
+\begin{equation}
+B \approx 1.0\times 10^{-2}~\mathrm{T} \;(\approx 10.2~\mathrm{mT})
+\end{equation}
+محاسبه شد. این مقدار با نتیجهٔ به‌دست‌آمده از تحلیل وابستگی نیرو به طول \lr{$L$} در همین آزمایش در یک مرتبهٔ بزرگی قرار دارد و نشان‌دهندهٔ سازگاری نسبی نتایج تجربی با مدل نظری است.
+
+
+\section{بستگی نیروی $F$ به $I_m$}
+
+مانند قبل شکاف بین قطب‌ها را حدود یک سانتیمتر تنظیم کرده و جریان عبوری از سیم‌پیچ‌ها \lr{($I_m$)} را روی صفر قرار دادیم. حلقهٔ سیم با طول \lr{$L = 10\,\mathrm{cm}$} را طوری قرار دادیم که ضلع افقی آن عمود بر راستای میدان باشد. سپس جریان بیشینهٔ \lr{$i = 4\,\mathrm{A}$} را در حلقه برقرار کردیم و پیش از اعمال میدان، ترازو را در حالت تعادل تنظیم نمودیم. در ادامه، جریان عبوری از سیم‌پیچ‌ها \lr{($I_m$)} را به‌تدریج افزایش دادیم و با استفاده از ترازو، نیروی وارد بر حلقهٔ سیم را اندازه‌گیری کردیم. نتایج حاصل در جدول ثبت شد و آزمایش برای مقادیر مختلف \lr{$I_m$} تکرار شد. سپس منحنی تغییرات نیروی \lr{F} بر حسب \lr{$I_m$} برای مقادیر ثابت \lr{L} و \lr{$i$} رسم شد تا رفتار میدان مغناطیسی بررسی شود.
+
+%\end{wraptable}{l}{4cm} % r = راست جدول، 4cm = پهنای جدول
+%\vspace{-10pt} % برای تنظیم فاصله عمودی (اختیاری)
+\begin{table}[h!]
+\caption{}
+\label{tab3}
+\centering
+\begin{tabular}{cc}
+\hline
+$I_m \;[\mathrm{A}]$ & $\Delta F \;[\mathrm{mN}]$ \\
+\hline
+$0.50$ & $0.32$ \\
+$1.00$ & $0.66$ \\
+$1.50$ & $2.00$ \\
+$2.00$ & $3.16$ \\
+\hline
+\multicolumn{2}{c}{$i = 4\mathrm{A}$ , $L = 10\mathrm{cm}$}
+\end{tabular}
+\end{table}
+%\end{wraptable}
+
+شکل منحنی تغییرات $F$ بر حسب $I_m$ را برای مقادیر ثابت $L$ و $i$ نشان می‌دهد.
+
+\begin{figure}[h]
+\caption{{$\Delta F$ برحسب $I_m$}}
+\label{fig:ImF}
+\centering
+\pgfplotsset{
+    width=9cm,
+    height=5cm,
+    scale only axis,
+    tick align = outside,
+    yticklabel style={/pgf/number format/fixed},
+}
+
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel={\lr{[$\mathrm{A}$]} جریان $I_m$},
+    ylabel={\lr{[$\mathrm{mN}$]} $\Delta F$},
+    xmin=0, xmax=2.1,
+    ymin=0, ymax=3.5,
+    xtick distance=0.5,
+    ymajorgrids=true,
+    xmajorgrids=true,
+    grid style=dashed,
+	legend pos=north west,
+    smooth,
+    mark size=2.5pt,
+    xticklabel style={
+        /pgf/number format/fixed,
+        /pgf/number format/precision=1
+    },
+]
+
+\addplot[
+    mark=square,
+    smooth,
+	only marks
+]
+coordinates {
+    (0.50, 0.32)
+    (1.00, 0.66)
+    (1.50, 2.00)
+    (2.00, 3.16)
+};
+
+\addplot[
+    smooth,
+    domain=0:2.1,
+    samples=3
+]
+{ 1.972 * x - 0.93 };
+
+\legend{\rl{داده‌های تجربی}, 
+$y=1.972 x - 0.93$
+}
+\end{axis}
+\end{tikzpicture}
+\end{figure}
+
+از دیدگاه نظری، نیروی مغناطیسی وارد بر بخش افقی حلقه طبق رابطهٔ
+\begin{equation}
+F = i\,L\,B
+\end{equation}
+بیان می‌شود که در آن \lr{$B$} میدان مغناطیسی در شکاف بین قطب‌ها است. در این آزمایش، \lr{$i$} و \lr{$L$} ثابت‌اند و میدان \lr{$B$} تابعی از جریان \lr{$I_m$} در سیم‌پیچ‌های میدان است؛ یعنی می‌توان نوشت:
+\begin{equation}
+B = \alpha\,I_m \quad\Rightarrow\quad F = i\,L\,\alpha\,I_m.
+\end{equation}
+بنابراین انتظار می‌رود تغییرات نیروی مغناطیسی بر حسب \lr{$I_m$} در بازهٔ کاری مورد نظر به خوبی با یک خط راست تقریب زده شود:
+\begin{equation}
+\Delta F_i = a\,I_{m,i} + b,
+\end{equation}
+که \lr{$a$} شیب خط و \lr{$b$} عرض از مبدأ است و \lr{$a$} باید متناسب با \lr{$iL\alpha$} باشد. در ادامه، با استفاده از روش کمینه مربعات، مقادیر \lr{$a$} و \lr{$b$} را از روی داده‌های جدول \ref{tab3} به‌دست می‌آوریم و سپس به کمک شیب خط، رفتار میدان مغناطیسی بر حسب \lr{$I_m$} را تحلیل می‌کنیم.
+
+\paragraph{فرمول‌های روش کمینه مربعات برای خط راست}
+برای \lr{$n$} نقطهٔ دادهٔ \lr{$(I_{m,i},\Delta F_i)$}، ضرایب خط برازش‌یافته \lr{$\Delta F = a I_m + b$} در روش کمینه مربعات به صورت زیر است:
+\begin{align}
+a &= \frac{n\sum I_{m,i}\,\Delta F_i - \left(\sum I_{m,i}\right)\left(\sum \Delta F_i\right)}
+         {n\sum I_{m,i}^2 - \left(\sum I_{m,i}\right)^2}, \\
+b &= \frac{\left(\sum \Delta F_i\right)\left(\sum I_{m,i}^2\right) - \left(\sum I_{m,i}\right)\left(\sum I_{m,i}\,\Delta F_i\right)}
+         {n\sum I_{m,i}^2 - \left(\sum I_{m,i}\right)^2}.
+\end{align}
+
+
+\paragraph{محاسبهٔ کمیت‌های میانی}
+ابتدا مجموع‌ها و حاصل‌ضرب‌های لازم را محاسبه می‌کنیم:
+\begin{align}
+\sum I_{m,i} &= 0.50 + 1.00 + 1.50 + 2.00 = 5.00~\mathrm{A}, \\
+\sum \Delta F_i &= 0.32 + 0.66 + 2.00 + 3.16 = 6.14~\mathrm{mN}, \\
+\sum I_{m,i}^2 &= 0.50^2 + 1.00^2 + 1.50^2 + 2.00^2 \nonumber\\
+&= 0.25 + 1.00 + 2.25 + 4.00 = 7.50~\mathrm{A}^2, \\
+\sum I_{m,i}\,\Delta F_i &= 0.50\times 0.32 + 1.00\times 0.66 + 1.50\times 2.00 + 2.00\times 3.16 \nonumber\\
+&= 0.16 + 0.66 + 3.00 + 6.32 = 10.14~\mathrm{A\,mN}.
+\end{align}
+
+مخرج مشترک در فرمول‌های \lr{$a$} و \lr{$b$} برابر است با:
+\begin{align}
+D &= n\sum I_{m,i}^2 - \left(\sum I_{m,i}\right)^2 \nonumber\\
+  &= 4\times 7.50 - (5.00)^2 \nonumber\\
+  &= 30.00 - 25.00 = 5.00.
+\end{align}
+
+\paragraph{محاسبهٔ شیب و عرض از مبدأ}
+اکنون با قرار دادن مقادیر عددی، شیب \lr{$a$} به صورت زیر به‌دست می‌آید:
+\begin{align}
+a &= \frac{n\sum I_{m,i}\,\Delta F_i - \left(\sum I_{m,i}\right)\left(\sum \Delta F_i\right)}
+         {D} \nonumber\\
+  &= \frac{4\times 10.14 - 5.00\times 6.14}{5.00} \nonumber\\
+  &= \frac{40.56 - 30.70}{5.00} 
+   = \frac{9.86}{5.00} 
+   \approx 1.972~\frac{\mathrm{mN}}{\mathrm{A}}.
+\end{align}
+
+عرض از مبدأ \lr{$b$} نیز از رابطهٔ زیر به‌دست می‌آید:
+\begin{align}
+b &= \frac{\left(\sum \Delta F_i\right)\left(\sum I_{m,i}^2\right) - \left(\sum I_{m,i}\right)\left(\sum I_{m,i}\,\Delta F_i\right)}
+         {D} \nonumber\\
+  &= \frac{6.14\times 7.50 - 5.00\times 10.14}{5.00} \nonumber\\
+  &= \frac{46.05 - 50.70}{5.00} 
+   = \frac{-4.65}{5.00} 
+   \approx -0.93~\mathrm{mN}.
+\end{align}
+
+بنابراین، خط برازش‌یافته به داده‌های جدول \ref{tab3} (در واحدهای \lr{A} و \lr{mN}) به صورت زیر نوشته می‌شود:
+\begin{equation}
+\Delta F~[\mathrm{mN}] \;\approx\; 1.972~\frac{\mathrm{mN}}{\mathrm{A}}\; I_m~[\mathrm{A}] \;-\; 0.93~\mathrm{mN}.
+\end{equation}
+عرض از مبدأ منفی و کوچک می‌تواند ناشی از خطای تنظیم صفر ترازو، اثرات اصطکاکی، یا خطاهای سیستماتیک دیگر باشد. با وجود این، رفتار کلی داده‌ها با یک روند تقریباً خطی سازگار است و برای تحلیل وابستگی میدان مغناطیسی به \lr{$I_m$}، شیب خط کمیت اصلی مورد استفاده است.
+
+\paragraph{تبدیل شیب به دستگاه \lr{SI}}
+برای استفاده در رابطهٔ نظری \lr{$F = iLB$}، لازم است شیب خط در دستگاه \lr{SI} بیان شود. با توجه به اینکه
+\[
+1~\mathrm{mN} = 10^{-3}~\mathrm{N},
+\]
+داریم:
+\begin{equation}
+1~\frac{\mathrm{mN}}{\mathrm{A}} = 10^{-3}~\frac{\mathrm{N}}{\mathrm{A}},
+\end{equation}
+بنابراین شیب در دستگاه \lr{SI} برابر است با:
+\begin{equation}
+a_{\mathrm{SI}} = 1.972~\frac{\mathrm{mN}}{\mathrm{A}}
+\;\approx\; 1.972\times 10^{-3}~\frac{\mathrm{N}}{\mathrm{A}}.
+\end{equation}
+
+\paragraph{استخراج وابستگی میدان مغناطیسی به \texorpdfstring{$I_m$}{Im}}
+از آنجا که در این سری آزمایش‌ها \lr{$i$} و \lr{$L$} ثابت‌اند، رابطهٔ نظری به صورت
+\begin{equation}
+F = i\,L\,B(I_m)
+\end{equation}
+قابل نوشتن است. اگر میدان مغناطیسی در بازهٔ مورد بررسی، متناسب با \lr{$I_m$} باشد، می‌توان نوشت:
+\begin{equation}
+B(I_m) = \alpha\,I_m \quad\Rightarrow\quad F = i\,L\,\alpha\,I_m.
+\end{equation}
+بنابراین شیب نمودار \lr{$F$} بر حسب \lr{$I_m$} در دستگاه \lr{SI} برابر است با:
+\begin{equation}
+a_{\mathrm{SI}} = i\,L\,\alpha \quad\Rightarrow\quad \alpha = \frac{a_{\mathrm{SI}}}{i\,L}.
+\end{equation}
+با توجه به \lr{$L = 10\,\mathrm{cm} = 0.10\,\mathrm{m}$} و \lr{$i = 4\,\mathrm{A}$} داریم:
+\begin{align}
+\alpha &= \frac{1.972\times 10^{-3}~\mathrm{N/A}}{4~\mathrm{A}\times 0.10~\mathrm{m}} \nonumber\\
+       &= \frac{1.972\times 10^{-3}}{0.40}~\frac{\mathrm{N}}{\mathrm{A}^2\,\mathrm{m}} 
+        \approx 4.93\times 10^{-3}~\frac{\mathrm{T}}{\mathrm{A}}.
+\end{align}
+بنابراین میدان مغناطیسی در شکاف بین قطب‌ها به صورت خطی از جریان \lr{$I_m$} تبعیت می‌کند:
+\begin{equation}
+B(I_m) \approx 4.93\times 10^{-3}~\frac{\mathrm{T}}{\mathrm{A}}\; I_m.
+\end{equation}
+به عنوان مثال، برای \lr{$I_m = 2.0~\mathrm{A}$} داریم:
+\begin{align}
+B(I_m = 2.0~\mathrm{A}) &\approx 4.93\times 10^{-3}\times 2.0~\mathrm{T} \nonumber\\
+&\approx 9.86\times 10^{-3}~\mathrm{T} 
+\;\approx\; 9.9~\mathrm{mT}.
+\end{align}
+
+\paragraph{نتیجه‌گیری دربارهٔ تغییرات \texorpdfstring{$B$}{B} و \texorpdfstring{$I_m$}{Im}}
+با توجه به اینکه:
+\begin{enumerate}
+
+\item نمودار \lr{$\Delta F$} بر حسب \lr{$I_m$} رفتار تقریباً خطی نشان می‌دهد،  
+\item  در این آزمایش \lr{$i$} و \lr{$L$} ثابت‌اند و در نتیجه \lr{$F \propto B$}،  
+\end{enumerate}
+می‌توان نتیجه گرفت که در بازهٔ بررسی‌شده، میدان مغناطیسی \lr{$B$} در ناحیهٔ شکاف بین قطب‌ها تقریباً متناسب خطی با جریان سیم‌پیچ‌ها \lr{$I_m$} است. به عبارت دیگر، از منحنی \lr{$F(I_m)$} می‌توان نتیجه‌ای روشن دربارهٔ وابستگی خطی \lr{$B$} به \lr{$I_m$} گرفت، و این رفتار با مدل سادهٔ آهنربای الکترومغناطیسی در ناحیه‌ای که هنوز به اشباع مغناطیسی نزدیک نشده است، سازگار است.
+
+
+\section*{پرسش‌ها}
+
+
+\paragraph{1}
+چرا در این آزمایش، از سیمهای مسی بدون روکش و قابل انعطاف برای اتصال منبع جریان به حلقه سیم استفاده شده است؟ 
+
+در این آزمایش از سیم‌های مسی بدون روکش و قابل‌انعطاف برای اتصال منبع جریان به حلقهٔ سیم استفاده شده است، زیرا سیم بدون روکش کم‌ترین نیروی مکانیکی اضافی را به حلقه منتقل می‌کند و در نتیجه تنها نیرویی که در ترازو اندازه‌گیری می‌شود، نیروی مغناطیسی وارد بر حلقه است. وجود هرگونه روکش یا سیم صلب‌تر، باعث ایجاد نیروهای مکانیکی اضافی ناشی از پیچ‌خوردگی، کشش، یا اصطکاک می‌شود و خوانش ترازو را دچار خطا می‌کند. علاوه‌براین، سیم بدون روکش سبک‌تر بوده و در اثر عبور جریان، تغییر شکل ناخواستهٔ قابل‌توجهی ندارد؛ ازاین‌رو تأثیر مکانیکی آن بر حلقه و ترازو حداقل است و داده‌های آزمایش به مقدار واقعی نیروی مغناطیسی نزدیک‌تر می‌شوند.
+
+
+\paragraph{2}
+چرا باید جهت نیروی مغناطیسی، به طرف پایین باشد تا نتایج آزمایش قابل‌قبول‌تر باشد؟ 
+
+برای اینکه نتایج آزمایش قابل‌قبول و قابل‌تحلیل باشند، لازم است جهت نیروی مغناطیسی به سمت پایین باشد. زمانی که نیرو رو به پایین است، اثر آن به‌صورت افزایش وزن مؤثر حلقه روی ترازو ظاهر می‌شود و ترازو تغییرات نیرو را به‌صورت دقیق‌تری ثبت می‌کند. اگر جهت نیرو رو به بالا باشد، امکان کاهش وزن ظاهری یا حتی جداشدن جزئی حلقه از تکیه‌گاه وجود دارد که باعث ایجاد خطا یا ناپایداری در قرائت ترازو می‌شود. همچنین در حالت نیروهای رو به بالا، تنش‌های مکانیکی در اتصالات، ناپایداری حلقه و ایجاد ارتعاش می‌تواند نتایج را غیرقابل‌اعتماد کند. بنابراین با انتخاب جهت مناسب جریان، نیروی مغناطیسی به سمت پایین تنظیم می‌شود تا اندازه‌گیری نیروی خالص با دقت بیشتری انجام گیرد.
+
+
+\paragraph{3}
+چرا سیم‌های مسی بدون روکش و قابل انعطاف باید اندکی شکم داشته باشند و نباید حالت کشیده داشته باشند؟ اگر زیادی شل و یا زیادی کشیده باشند چه اتفاقی می‌افتد. 
+
+سیم‌های مسی بدون روکش و قابل‌انعطاف باید اندکی شکم داشته باشند و نباید کاملاً کشیده یا بیش از حد شل باشند. ایجاد مقدار کمی شکم باعث می‌شود که سیم‌ها نیرویی مکانیکی به حلقه وارد نکنند و در اثر تغییر جریان، نیروی کششی یا فشاری اضافی به سیستم منتقل نشود. اگر سیم‌ها بیش از حد کشیده باشند، هرگونه تغییر کوچک در موقعیت حلقه یا انبساط حرارتی ناشی از عبور جریان، باعث انتقال نیرو به ترازو شده و قرائت ترازو را دچار خطا می‌کند. از سوی دیگر، اگر سیم‌ها بیش از حد شل باشند، امکان نوسان، جابه‌جایی یا تماس ناخواسته وجود دارد که می‌تواند نیروهای اضافی ایجاد کرده و خوانش ترازو را مختل کند. بنابراین وجود شکم مناسب در سیم‌ها تضمین می‌کند که تنها نیروی مغناطیسی وارد بر حلقه اندازه‌گیری می‌شود و اثرات مکانیکی خارج از کنترل حذف می‌گردد.
+
+
+\end{document}

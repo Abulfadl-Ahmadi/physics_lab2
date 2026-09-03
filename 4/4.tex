@@ -1,0 +1,989 @@
+\documentclass[a4paper, 11pt]{article}
+\usepackage[margin=0.75in]{geometry}
+\usepackage{graphicx, tabularx, hyperref, amsmath, wrapfig}
+\usepackage[usenames,dvipsnames]{color,xcolor}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage[siunitx]{circuitikz}
+\usepackage{booktabs}
+\usepackage{pgfplotstable, pgfplots}
+\renewcommand{\arraystretch}{1.2}
+\usepackage{xepersian}
+\settextfont[Scale=0.9]{Dibaj}
+\setdigitfont[Scale=1]{Dibaj}
+
+\lstset{
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue},
+    commentstyle=\color{green!50!black},
+    stringstyle=\color{red!70!black},
+    numbers=left,
+    numberstyle=\tiny,
+    stepnumber=1,
+    breaklines=true,
+    frame=single
+}
+
+
+\begin{document}
+
+\begin{center}
+\textbf{{\huge گزارش‌کار آزمایش شمارهٔ
+4:
+باردار شدن و بی‌بار شدن خازن‌ها
+}}
+
+\end{center}
+
+\hrule
+\noindent\begin{tabular}{rrl}
+اعضای گروه: & ابوالفضل احمدی & 403172283\\
+& نام و نام‌خانوادگی & 403001122
+\end{tabular}\hfill
+\begin{tabular}{rr}
+تاریخ انجام آزمایش: & 24/08/1404 \\
+دستیار آموزشی: &  \\
+\end{tabular}\hfill
+\begin{tabular}{rr}
+گروه:  &  \\
+زیرگروه: \lr{A} &  \\
+\end{tabular}
+\hrule
+
+\section*{اهداف و خلاصهٔ شرح آزمایش}
+
+\textbf{هدف‌ها:}
+\begin{itemize}
+  \item بررسی رفتار زمانیِ بارگیری و تخلیهٔ خازن‌ها و تأیید رابطهٔ نمایی \(V(t)=V_0 e^{-t/\tau}\).
+  \item استخراج ثابت زمانیِ \(\tau=RC\) با روشِ کمینهٔ مربعات از داده‌های تجربی.
+  \item برآورد مقاومت داخلیِ ولت‌متر \(R_\mathrm{v}\) در دو آزمایش مستقل و محاسبهٔ میانگین آن.
+  \item تعیین ظرفیتِ معادلِ خازن‌ها در اتصالِ سری و موازی و مقایسه با روابط تئوری.
+  \item محاسبهٔ خطای نسبیِ نتایجِ تجربی نسبت به مقادیر تئوری و بحث دربارهٔ منابعِ خطا.
+\end{itemize}
+
+\textbf{خلاصه:}
+در این گزارش، با ثبت تغییراتِ ولتاژِ اندازه‌گیری‌شده توسطِ ولت‌متر در گذرِ زمان، برای دو پیکربندی متفاوت (باردار کردن خازن و تخلیهٔ خازن)، از برازشِ خطیِ \(\log_{10}(V/V_0)\) بر حسبِ \(t\) استفاده شد و شیبِ به‌دست‌آمده برای تعیینِ \(\tau\) و سپس \(R_\mathrm{v}\) به‌کار رفت. برای خازن \(C_1 = 20~\mu\mathrm{F}\) مقدارِ \(R_\mathrm{v} \approx 9~\mathrm{M\Omega}\) و برای خازن \(C_2 = 4~\mu\mathrm{F}\) مقدارِ \(R_\mathrm{v} \approx 12~\mathrm{M\Omega}\) به‌دست آمد و میانگین \(\bar{R} \approx 10.5~\mathrm{M\Omega}\) محاسبه شد. سپس ظرفیتِ معادل در اتصالِ سری و موازیِ \(C_1\) و \(C_2\) با استفاده از \(\tau\) تجربی و \(\bar{R}\) محاسبه و با روابطِ تئوریِ \(\tfrac{1}{C}=\tfrac{1}{C_1}+\tfrac{1}{C_2}\) (سری) و \(C=C_1+C_2\) (موازی) مقایسه شد. اختلاف‌ها حدود \(9\%-11\%\) بودند که با محدودیتِ دقتِ قرائتِ ولت‌متر، وابستگیِ مقاومتِ ورودی به محدودهٔ اندازه‌گیری، مقاومت‌های ناچیزِ سیم‌ها و اتصالات، و تقریب‌های عددی در برازش توجیه‌پذیر است. در مجموع، نتایج با مدل تئوری سازگارند و روشِ تعیینِ \(R_\mathrm{v}\) و \(C_\mathrm{eq}\) از رویِ \(\tau\) کارآمد و قابلِ اتکا ارزیابی می‌شود.
+
+\section{باردار شدن خازن $C_1$ و تعیین مقاومت داخلی ولت‌متر }
+\begin{wraptable}{l}{4cm} % r = راست جدول، 4cm = پهنای جدول
+%\vspace{-10pt} % برای تنظیم فاصله عمودی (اختیاری)
+%\begin{table}[h!]
+\caption{داده‌های باردار شدن خازن \(C_1 = 20~\mu\mathrm{F}\) و نسبت \(V/V_0\) برحسبِ زمان}
+\label{tab1}
+\centering
+\begin{tabular}{ccc}
+\hline
+$t \;[\mathrm{s}]$ & $V \;[\mathrm{V}]$ & $ V / V_0$ \\
+\hline
+$0$ & $10$ & $1.000$ \\
+$15$ & $9.19$ & $0.919$ \\
+$30$ & $8.46$ & $0.846$ \\
+$45$ & $7.79$ & $0.779$ \\
+$60$ & $7.17$ & $0.717$ \\
+$75$ & $6.59$ & $0.659$ \\
+$90$ & $6.07$ & $0.607$ \\
+$105$ & $5.59$ & $0.559$ \\
+$120$ & $5.14$ & $0.514$ \\
+$135$ & $4.73$ & $0.473$ \\
+\hline
+\end{tabular}
+%\end{table}
+\end{wraptable}
+
+مطابق شکل، خازنی با ظرفیتِ $C_1 = 20~\mu\mathrm{F}$ را به‌صورتِ سری به منبع تغذیهٔ ۱۰ ولتی و یک ولت‌متر وصل کردیم و برای زمان‌های مختلفِ جدول \ref{tab1}، عددی را که ولت‌متر نشان می‌دهد گزارش کردیم.
+
+
+بین اختلاف پتانسیلِ منبع تغذیه $V_0$، اختلاف پتانسیلِ دو صفحهٔ خازن $V_C$ و عددی که ولت‌متر نشان می‌دهد $V$ رابطهٔ زیر برقرار است:
+\[
+V = V_0 - V_C = V_0 e^{-t/RC},
+\]
+
+
+\begin{figure}
+\caption{{$\dfrac{V}{V_0}$ برحسب زمان}}
+\label{fig1}
+\centering
+\pgfplotsset{
+    width=12cm,
+    height=5cm,
+    scale only axis,
+    tick align = outside,
+    yticklabel style={/pgf/number format/fixed},
+}
+\begin{tikzpicture}
+\begin{semilogyaxis}[
+    %title=\rl{{$\dfrac{V}{V_0}$ برحسب زمان}},
+    xlabel={\lr{[$\mathrm{s}$]} زمان $t$},
+    ylabel={$\dfrac{V}{V_0}$},
+    xmin=0, xmax=135,
+    ymin=0.1, ymax=1,
+    xtick distance=15,
+    yminorgrids=true,
+    ymajorgrids=true,
+    xmajorgrids=true,
+    grid style=dashed,
+    grid=both,
+    minor y tick num=9,
+    minor x tick num=2,
+    legend pos=north east,
+    xticklabel style={
+        /pgf/number format/fixed,
+        /pgf/number format/precision=0,
+        /pgf/number format/fixed zerofill
+    },
+]
+
+\addplot[
+    mark=square,
+    smooth
+]
+coordinates {
+    (0,   1.000)
+    (15,  0.919)
+    (30,  0.846)
+    (45,  0.779)
+    (60,  0.717)
+    (75,  0.659)
+    (90,  0.607)
+    (105, 0.559)
+    (120, 0.514)
+    (135, 0.473)
+};
+
+%\legend{$V/V_0$}
+
+\end{semilogyaxis}
+\end{tikzpicture}
+\end{figure}
+
+در شکل \ref{fig1} منحنیِ تغییراتِ $\frac{V}{V_0}$ برحسبِ زمان در \emph{مقیاس‌بندیِ نیمه‌لگاریتمی} نمایش داده شده است.
+
+
+حال با استفاده از شیبِ خط (با روشِ کمینهٔ مربعات) $\tau$، ثابت زمانیِ مدار را به‌دست می‌آوریم و مقاومت داخلیِ ولت‌متر را محاسبه می‌کنیم.
+
+\subsection*{تعیینِ ثابتِ زمانیِ مدار و مقاومتِ داخلیِ ولت‌متر}
+
+رابطهٔ تئوری مدار به صورت زیر است:
+\begin{equation}
+V = V_0 - V_C = V_0 e^{-t/RC},
+\end{equation}
+در نتیجه
+\begin{equation}
+\frac{V}{V_0} = e^{-t/RC}.
+\end{equation}
+اگر لگاریتم دهدهی بگیریم، داریم:
+\begin{equation}
+\log_{10}\!\left(\frac{V}{V_0}\right)
+  = -\frac{t}{RC\ln 10}.
+\end{equation}
+با تعریف
+\[
+x_i = t_i, \qquad
+y_i = \log_{10}\!\left(\frac{V_i}{V_0}\right),
+\]
+باید رابطهٔ خطی
+\begin{equation}
+y_i = a + b x_i
+\end{equation}
+صدق کند، که در آن
+\begin{equation}
+b = -\frac{1}{RC\ln 10} = -\frac{1}{\tau \ln 10}.
+\end{equation}
+
+برای به‌دست‌آوردن \(a\) و \(b\) از روش کمینه مربعات استفاده می‌کنیم. فرمول‌های شیب و عرض از مبدأ به صورت زیر است:
+\begin{align}
+b &=
+\frac{n\sum x_i y_i - \left(\sum x_i\right)\left(\sum y_i\right)}
+     {n\sum x_i^2 - \left(\sum x_i\right)^2},\\[2mm]
+a &= \frac{1}{n}\left(\sum y_i - b\sum x_i\right),
+\end{align}
+که در آن \(n\) تعداد نقاط آزمایش است. با استفاده از داده‌های جدول \ref{tab1} داریم:
+\begin{align}
+\sum x_i &= \sum t_i = 675~\mathrm{s},\\
+\sum x_i^2 &= \sum t_i^2 = 64125~\mathrm{s^2},\\
+\sum y_i &\approx -1.6269,\\
+\sum x_i y_i &\approx -154.48.
+\end{align}
+بنابراین:
+\begin{align}
+b &=
+\frac{10(-154.48) - 675(-1.6269)}
+     {10(64125) - 675^2} \\
+&\approx \frac{-446.6}{185625} \\
+&\approx -2.41\times10^{-3}\ \mathrm{s^{-1}},
+\end{align}
+و
+\begin{align}
+a &= \frac{1}{10}\left(\sum y_i - b\sum x_i\right) \\
+&\approx -3.1\times10^{-4},
+\end{align}
+که مقدار \(a\) بسیار کوچک بوده و با مقدار تئوری صفر سازگار است. در نتیجه معادلهٔ خط برازش‌شده روی نمودار نیمه‌لگاریتمی به صورت زیر است:
+\begin{equation}
+\log_{10}\!\left(\frac{V}{V_0}\right)
+  \approx -2.41\times10^{-3}\, t - 3.1\times10^{-4}.
+\end{equation}
+
+از رابطهٔ
+\begin{equation}
+b = -\frac{1}{\tau \ln 10}
+\end{equation}
+ثابت زمانی مدار به صورت زیر به‌دست می‌آید:
+\begin{align}
+\tau &= -\frac{1}{b\ln 10} \\
+&= -\frac{1}{(-2.41\times10^{-3})\times 2.3026} \\
+&\approx 1.8\times10^{2}\ \mathrm{s}.
+\end{align}
+
+در این آزمایش تنها مقاومت سری، مقاومت داخلی ولت‌متر \(R_\mathrm{v}\) است، بنابراین:
+\begin{equation}
+\tau = R_\mathrm{v} C_1
+\qquad\Rightarrow\qquad
+R_\mathrm{v} = \frac{\tau}{C_1}.
+\end{equation}
+با توجه به
+\[
+C_1 = 20~\mu\mathrm{F} = 20\times10^{-6}~\mathrm{F},
+\]
+خواهیم داشت:
+\begin{align}
+R_\mathrm{v}
+&= \frac{1.8\times10^{2}}{20\times10^{-6}} \\
+&\approx 9.0\times10^{6}\ \Omega \\
+&\approx 9~\mathrm{M}\Omega.
+\end{align}
+
+در نتیجه:
+\begin{equation}
+\boxed{\tau \approx 1.8\times10^{2}\ \mathrm{s}}
+\qquad
+\boxed{R_\mathrm{v} \approx 9~\mathrm{M}\Omega}.
+\end{equation}
+
+
+
+\section{بی‌بار شدن خازن $C_2$ و تعیین مقاومت داخلی ولت‌متر}
+\begin{wraptable}{l}{4cm}
+%\begin{table}[h!]
+\caption{داده‌های بی‌بار شدن خازن \(C_2 = 4~\mu\mathrm{F}\) و ولتاژ برحسبِ زمان}
+\label{tab2}
+\centering
+\begin{tabular}{cc}
+\hline
+$t \;[\mathrm{s}]$ & $V \;[\mathrm{V}]$ \\
+\hline
+  $0$ & $10$ \\
+ $15$ & $7.36$ \\
+ $30$ & $5.37$ \\
+ $45$ & $3.92$ \\
+ $60$ & $2.87$ \\
+ $75$ & $2.11$ \\
+ $90$ & $1.54$ \\
+$105$ & $1.13$ \\
+$120$ & $0.83$ \\
+$135$ & $0.60$ \\
+\hline
+\end{tabular}
+%\end{table}
+\end{wraptable}
+
+ابتدا خازنی با ظرفیتِ $C_2 = 4~\mu\mathrm{F}$ را به‌وسیلهٔ یک منبع تغذیهٔ ۱۰ ولتی باردار کردیم؛ سپس خازن را از منبع تغذیه جدا کرده و به ولت‌متر وصل نمودیم تا از راهِ مقاومت داخلیِ ولت‌متر تخلیه شود. برای زمان‌های مختلفِ جدول \ref{tab2}، عددی را که ولت‌متر نشان می‌دهد گزارش کردیم.
+
+\begin{figure}
+\caption{{$\dfrac{V}{V_0}$ برحسب زمان برای خازن $C_2$}}
+\label{fig2}
+\centering
+\pgfplotsset{
+    width=12cm,
+    height=10cm,
+    scale only axis,
+    tick align = outside,
+    yticklabel style={/pgf/number format/fixed},
+}
+\begin{tikzpicture}
+\begin{semilogyaxis}[
+    %title=\rl{{$\dfrac{V}{V_0}$ برحسب زمان برای خازن $C_2$}},
+    xlabel={\lr{[$\mathrm{s}$]} زمان $t$},
+    ylabel={$\dfrac{V}{V_0}$},
+    xmin=0, xmax=135,
+    ymin=0.01, ymax=1.1,
+    xtick distance=15,
+    ymajorgrids=true,
+    yminorgrids=true,
+    xmajorgrids=true,
+    grid=both,
+    grid style=dashed,
+    minor y tick num=9,
+    minor x tick num=2,
+    xticklabel style={
+        /pgf/number format/fixed,
+        /pgf/number format/precision=0,
+        /pgf/number format/fixed zerofill
+    },
+]
+
+\addplot[
+    mark=square,
+    smooth
+]
+coordinates {
+    (0,   1.000)
+    (15,  0.736)
+    (30,  0.537)
+    (45,  0.392)
+    (60,  0.287)
+    (75,  0.211)
+    (90,  0.154)
+    (105, 0.113)
+    (120, 0.083)
+    (135, 0.060)
+};
+
+%\legend{$V/V_0$}
+
+\end{semilogyaxis}
+\end{tikzpicture}
+\end{figure}
+
+
+در شکل \ref{fig2} منحنیِ تغییراتِ $\frac{V}{V_0}$ برحسبِ زمان در \emph{مقیاس‌بندیِ نیمه‌لگاریتمی} نمایش داده شده است.
+
+
+حال با استفاده از شیبِ خط (با روشِ کمینهٔ مربعات) $\tau$، ثابت زمانیِ مدار را به‌دست می‌آوریم و مقاومت داخلیِ ولت‌متر را محاسبه می‌کنیم.
+
+
+\subsection*{تعیینِ ثابتِ زمانیِ مدار و مقاومتِ داخلیِ ولت‌متر (خازن \texorpdfstring{$C_2 = 4\,\mu\mathrm{F}$}{C2})}
+
+در این آزمایش، خازن $C_2$ ابتدا تا ولتاژ $V_0 = 10~\mathrm{V}$ باردار شد و سپس از طریق مقاومت داخلی ولت‌متر تخلیه گردید. رابطهٔ تئوری ولتاژ روی خازن در هنگام تخلیه به صورت زیر است:
+\begin{equation}
+V(t) = V_0 e^{-t/RC},
+\end{equation}
+بنابراین
+\begin{equation}
+\frac{V}{V_0} = e^{-t/RC}.
+\end{equation}
+با گرفتن لگاریتم دهدهی، خواهیم داشت:
+\begin{equation}
+\log_{10}\!\left(\frac{V}{V_0}\right)
+  = -\frac{t}{RC\ln 10}.
+\end{equation}
+اگر تعریف کنیم
+\[
+x_i = t_i, \qquad
+y_i = \log_{10}\!\left(\frac{V_i}{V_0}\right),
+\]
+آنگاه داده‌ها باید روی یک خط راست از فرم
+\begin{equation}
+y_i = a + b x_i
+\end{equation}
+قرار گیرند که در آن
+\begin{equation}
+b = -\frac{1}{RC\ln 10} = -\frac{1}{\tau \ln 10}.
+\end{equation}
+
+\paragraph{ساختن داده‌های لگاریتمی}
+با توجه به $V_0 = 10~\mathrm{V}$، نسبت‌های $\frac{V_i}{V_0}$ و لگاریتم دهدهی آن‌ها به صورت زیر به‌دست می‌آیند (چند رقم اعشار نگه داشته شده است):
+\[
+\begin{array}{c c c c}
+\hline
+t_i~[\mathrm{s}] & V_i~[\mathrm{V}] & V_i/V_0 & y_i=\log_{10}(V_i/V_0) \\
+\hline
+0   & 10.00 & 1.000 &  0.0000 \\
+15  &  7.36 & 0.736 & -0.1331 \\
+30  &  5.37 & 0.537 & -0.2700 \\
+45  &  3.92 & 0.392 & -0.4067 \\
+60  &  2.87 & 0.287 & -0.5421 \\
+75  &  2.11 & 0.211 & -0.6757 \\
+90  &  1.54 & 0.154 & -0.8125 \\
+105 &  1.13 & 0.113 & -0.9469 \\
+120 &  0.83 & 0.083 & -1.0809\\
+135 &  0.60 & 0.060 & -1.2218\\
+\hline
+\end{array}
+\]
+
+\paragraph{روش کمینه مربعات}
+
+برای خط $y = a + bx$، شیب $b$ و عرض از مبدأ $a$ با روش کمینه مربعات برابرند با:
+\begin{align}
+b &=
+\frac{n\sum x_i y_i - \left(\sum x_i\right)\left(\sum y_i\right)}
+     {n\sum x_i^2 - \left(\sum x_i\right)^2},\\[2mm]
+a &= \frac{1}{n}\left(\sum y_i - b\sum x_i\right),
+\end{align}
+که در آن $n=10$ تعداد نقاط است.
+
+با استفاده از داده‌ها داریم:
+\begin{align}
+\sum x_i &= \sum t_i = 675~\mathrm{s},\\
+\sum x_i^2 &= \sum t_i^2 = 64125~\mathrm{s^2},\\
+\sum y_i &\approx -6.090,\\
+\sum x_i y_i &\approx -578.82.
+\end{align}
+
+در نتیجه شیب خط برابر است با:
+\begin{align}
+b &=
+\frac{10(-578.82) - 675(-6.090)}
+     {10(64125) - 675^2} \\[1mm]
+&=
+\frac{-5788.2 + 4109.0}{641250 - 455625} \\[1mm]
+&\approx \frac{-1679.2}{185625} \\[1mm]
+&\approx -9.04\times 10^{-3}\ \mathrm{s^{-1}}.
+\end{align}
+
+عرض از مبدأ نیز برابر است با:
+\begin{align}
+a &= \frac{1}{10}\left(\sum y_i - b\sum x_i\right)\\[1mm]
+&\approx \frac{1}{10}\left(-6.090 - (-9.04\times10^{-3})\times 675\right)\\[1mm]
+&\approx 1.0\times10^{-3},
+\end{align}
+که مقدار بسیار کوچکی است و با مقدار تئوری (تقریباً صفر) سازگار می‌باشد.
+
+پس معادلهٔ خط برازش‌شده روی نمودار نیمه‌لگاریتمی به صورت زیر است:
+\begin{equation}
+\log_{10}\!\left(\frac{V}{V_0}\right)
+  \approx -9.04\times10^{-3}\, t + 1.0\times10^{-3}.
+\end{equation}
+
+\paragraph{محاسبهٔ ثابت زمانی \texorpdfstring{$\tau$}{tau}}
+
+از رابطهٔ
+\begin{equation}
+b = -\frac{1}{\tau \ln 10}
+\end{equation}
+خواهیم داشت:
+\begin{align}
+\tau &= -\frac{1}{b\ln 10} \\[1mm]
+&= -\frac{1}{(-9.04\times10^{-3})\times 2.3026} \\[1mm]
+&\approx 4.8\times10^{1}\ \mathrm{s} \\[1mm]
+&\approx 48\ \mathrm{s}.
+\end{align}
+
+\paragraph{محاسبهٔ مقاومت داخلی ولت‌متر}
+
+در این مدار تنها مقاومت موجود، مقاومت داخلی ولت‌متر $R_\mathrm{v}$ است، بنابراین:
+\begin{equation}
+\tau = R_\mathrm{v} C_2
+\qquad\Rightarrow\qquad
+R_\mathrm{v} = \frac{\tau}{C_2}.
+\end{equation}
+با توجه به
+\[
+C_2 = 4~\mu\mathrm{F} = 4\times10^{-6}~\mathrm{F},
+\]
+خواهیم داشت:
+\begin{align}
+R_\mathrm{v}
+&= \frac{4.8\times10^{1}}{4\times10^{-6}} \\[1mm]
+&\approx 1.2\times10^{7}\ \Omega \\[1mm]
+&\approx 12~\mathrm{M}\Omega.
+\end{align}
+
+در نتیجه مقادیر به‌دست‌آمده برای این آزمایش به صورت زیر است:
+\begin{equation}
+\boxed{\tau \approx 4.8\times10^{1}\ \mathrm{s}}
+\qquad
+\boxed{R_\mathrm{v} \approx 12~\mathrm{M}\Omega}.
+\end{equation}
+
+
+
+حال مقدار متوسط مقاومت داخلی ولت‌متر $(\bar{R})$ را با استفاده از نتایج به‌دست آمده از قسمت‌های قبلی، تعیین می‌کنیم.
+
+\subsection*{تعیین مقدار متوسط مقاومت داخلی ولت‌متر}
+
+در دو بخشِ قبلی، با استفاده از دو خازنِ مختلف، مقدارِ مقاومتِ داخلیِ ولت‌متر به‌صورتِ زیر به‌دست آمد:
+\[
+R_1 \approx 9~\mathrm{M\Omega}, \qquad
+R_2 \approx 12~\mathrm{M\Omega}.
+\]
+برای به‌دست‌آوردن مقدار متوسط مقاومت داخلی ولت‌متر، از رابطهٔ
+\[
+\bar{R} = \frac{R_1 + R_2}{2}
+\]
+استفاده می‌کنیم. بنابراین:
+\[
+\bar{R} = \frac{9 + 12}{2}~\mathrm{M\Omega}
+       = 10.5~\mathrm{M\Omega}.
+\]
+در نتیجه مقدار متوسط مقاومت داخلی ولت‌متر برابر است با:
+\[
+\boxed{\bar{R} = 10.5~\mathrm{M\Omega}}.
+\]
+
+
+\section{بررسیِ تجربیِ ظرفیتِ معادلِ خازن‌های سری}
+\begin{wraptable}{l}{4cm}
+
+%\begin{table}[h!]
+\caption{داده‌های تخلیهٔ هم‌زمان خازن‌های \(C_1\) و \(C_2\) در اتصالِ سری و ولتاژ برحسبِ زمان}
+\label{tab3}
+\centering
+\begin{tabular}{cc}
+\hline
+$t \;[\mathrm{s}]$ & $V \;[\mathrm{V}]$ \\
+\hline
+  $0$ & $10$ \\
+ $15$ & $6.95$ \\
+ $30$ & $4.63$ \\
+ $45$ & $3.12$ \\
+ $60$ & $2.11$ \\
+ $75$ & $1.42$ \\
+ $90$ & $0.96$ \\
+$105$ & $0.65$ \\
+$120$ & $0.48$ \\
+$135$ & $0.30$ \\
+\hline
+\end{tabular}
+%\end{table}
+\end{wraptable}
+
+خازن‌های $C_1$ و $C_2$ که در قسمت‌های پیشین مورد استفاده قرار دادیم را به‌صورتِ سری به یک منبع تغذیهٔ ۱۰ ولتی و یک ولت‌متر وصل کردیم و برای زمان‌های مختلفِ جدول \ref{tab3}، عددِ نمایش‌داده‌شدهٔ ولت‌متر را گزارش کردیم.
+
+
+حال منحنیِ تغییراتِ $V$ برحسبِ زمان را رسم می‌کنیم؛ سپس با استفاده از منحنی و تعریفِ $\tau$، ثابت زمانیِ مدار را به‌دست می‌آوریم.
+
+\subsection*{تعیینِ ثابتِ زمانیِ مدار از روی منحنی $V(t)$}
+
+در مدار تخلیهٔ خازن، ولتاژ دو سر خازن بر حسب زمان از رابطهٔ
+\begin{equation}
+V(t) = V_0 e^{-t/\tau}
+\end{equation}
+پیروی می‌کند که در آن $\tau = RC$ ثابت زمانی مدار است. طبق این رابطه، در لحظهٔ
+\begin{equation}
+t = \tau \quad \Rightarrow \quad V(\tau) = \frac{V_0}{e}.
+\end{equation}
+
+در این آزمایش $V_0 = 10~\mathrm{V}$ است؛ بنابراین:
+\begin{equation}
+V(\tau) = \frac{10}{e} \approx 3.68~\mathrm{V}.
+\end{equation}
+
+\begin{figure}[h!]
+\caption{{$V(t)$ برای تخلیهٔ خازن‌های $C_1$ و $C_2$ (اتصال سری)}},
+\label{fig3}
+\centering
+\pgfplotsset{
+    width=12cm,
+    height=7cm,
+    scale only axis,
+    tick align = outside,
+    yticklabel style={/pgf/number format/fixed},
+}
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel={\lr{[$\mathrm{s}$]} زمان $t$},
+    ylabel={\lr{[$\mathrm{V}$]} ولتاژ $V$},
+    xmin=0, xmax=135,
+    ymin=0, ymax=10.5,
+    xtick distance=15,
+    ytick distance=1,
+    ymajorgrids=true,
+    xmajorgrids=true,
+    minor y tick num=1,
+    minor x tick num=1,
+    grid style=dashed,
+]
+
+\addplot[
+    mark=square,
+    only marks
+]
+coordinates {
+    (0,   10.00)
+    (15,  6.95)
+    (30,  4.63)
+    (45,  3.12)
+    (60,  2.11)
+    (75,  1.42)
+    (90,  0.96)
+    (105, 0.65)
+    (120, 0.48)
+    (135, 0.30)
+};
+
+\addplot[
+    smooth,
+    domain=0:135,
+    samples=100
+]
+{10.03282*exp(x / -38.66179) };
+
+\legend{\rl{داده‌های تجربی},
+$y=10.03282 \exp{\frac{x}{-38.66179}}$
+}
+
+\end{axis}
+\end{tikzpicture}
+\end{figure}
+
+
+با توجه به جدول \ref{tab3} و منحنی $V(t)$ رسم‌شده (شکل \ref{fig3})، مشاهده می‌شود که این مقدار ولتاژ بین دو نقطهٔ زیر قرار می‌گیرد:
+\[
+\begin{aligned}
+t_1 &= 30~\mathrm{s}, & V_1 &= 4.63~\mathrm{V},\\
+t_2 &= 45~\mathrm{s}, & V_2 &= 3.12~\mathrm{V}.
+\end{aligned}
+\]
+
+برای تخمین زمان $\tau$، بین این دو نقطه درون‌یابی خطی انجام می‌دهیم. ابتدا شیب خط بین دو نقطه را حساب می‌کنیم:
+\begin{equation}
+m = \frac{V_2 - V_1}{t_2 - t_1}
+  = \frac{3.12 - 4.63}{45 - 30}
+  = \frac{-1.51}{15}
+  \approx -0.1007~\mathrm{V/s}.
+\end{equation}
+
+اختلاف ولتاژ از مقدار $V_1$ تا $V(\tau) = 3.68~\mathrm{V}$ برابر است با:
+\begin{equation}
+\Delta V = V(\tau) - V_1 = 3.68 - 4.63 = -0.95~\mathrm{V}.
+\end{equation}
+پس زمان لازم برای این تغییر ولتاژ:
+\begin{equation}
+\Delta t = \frac{\Delta V}{m}
+         = \frac{-0.95}{-0.1007}
+         \approx 9.45~\mathrm{s}.
+\end{equation}
+
+در نتیجه زمان متناظر با $V = V_0/e$ برابر است با:
+\begin{equation}
+\tau \approx t_1 + \Delta t = 30~\mathrm{s} + 9.45~\mathrm{s}
+     \approx 3.9\times 10^{1}~\mathrm{s}.
+\end{equation}
+
+بنابراین، ثابت زمانیِ مدار به‌صورتِ زیر به‌دست می‌آید:
+\begin{equation}
+\boxed{\tau \approx 3.9\times 10^{1}\ \mathrm{s} \; (\approx 39~\mathrm{s}).}
+\end{equation}
+
+
+
+حال با استفاده از $\tau$ِ به‌دست‌آمده و مقاومت داخلیِ ولت‌متر، ظرفیتِ معادلِ خازن‌ها را به‌دست می‌آوریم و خطای این ظرفیت را نسبت به ظرفیتِ معادلِ 
+\(\frac{1}{C} = \frac{1}{C_1} + \frac{1}{C_2}\)
+محاسبه می‌کنیم.
+
+\subsection*{تعیینِ ظرفیتِ معادلِ خازن‌ها و محاسبهٔ خطا}
+
+از آزمایش قبلی (تخلیهٔ هم‌زمان دو خازن) ثابت زمانی مدار به صورت
+\[
+\tau \approx 3.9\times 10^{1}~\mathrm{s}
+\]
+به‌دست آمد. همچنین در دو قسمت قبلی میانگین مقاومت داخلی ولت‌متر را
+\[
+\bar{R} \approx 10.5\times 10^{6}~\Omega
+\]
+به‌دست آوردیم. چون در این مدار تنها مقاومت سری، مقاومت داخلی ولت‌متر است، طبق تعریف ثابت زمانی داریم:
+\begin{equation}
+\tau = \bar{R}\,C_{\mathrm{eq}} \qquad\Rightarrow\qquad
+C_{\mathrm{eq}}^{(\mathrm{exp})} = \frac{\tau}{\bar{R}}.
+\end{equation}
+با جایگذاری مقادیر عددی:
+\begin{align}
+C_{\mathrm{eq}}^{(\mathrm{exp})}
+&= \frac{3.9\times 10^{1}}{10.5\times 10^{6}}~\mathrm{F} \\[1mm]
+&= \frac{3.9}{10.5}\times 10^{-5}~\mathrm{F} \\[1mm]
+&\approx 3.71\times 10^{-6}~\mathrm{F} \\[1mm]
+&\approx 3.71~\mu\mathrm{F}.
+\end{align}
+
+ظرفیت معادل تئوریِ دو خازن مطابق رابطهٔ
+\begin{equation}
+\frac{1}{C} = \frac{1}{C_1} + \frac{1}{C_2}
+\end{equation}
+به‌صورت زیر است. با در نظر گرفتن
+\[
+C_1 = 20~\mu\mathrm{F}, \qquad C_2 = 4~\mu\mathrm{F},
+\]
+داریم:
+\begin{align}
+\frac{1}{C_{\mathrm{eq}}^{(\mathrm{th})}}
+&= \frac{1}{20} + \frac{1}{4} \quad (\mu\mathrm{F}^{-1}) \\[1mm]
+&= 0.05 + 0.25 = 0.30, \\[1mm]
+\Rightarrow\quad
+C_{\mathrm{eq}}^{(\mathrm{th})}
+&= \frac{1}{0.30} \approx 3.33~\mu\mathrm{F}.
+\end{align}
+
+اکنون خطای نسبی ظرفیت معادل به‌دست‌آمده از آزمایش نسبت به مقدار تئوری را محاسبه می‌کنیم:
+\begin{equation}
+\delta C = \frac{\bigl|C_{\mathrm{eq}}^{(\mathrm{exp})}
+             - C_{\mathrm{eq}}^{(\mathrm{th})}\bigr|}
+            {C_{\mathrm{eq}}^{(\mathrm{th})}} \times 100~\%.
+\end{equation}
+با جایگذاری:
+\begin{align}
+\delta C
+&= \frac{|3.71 - 3.33|}{3.33}\times 100~\% \\[1mm]
+&\approx \frac{0.38}{3.33}\times 100~\% \\[1mm]
+&\approx 1.14\times 10^{1}~\% \\[1mm]
+&\approx 11~\%.
+\end{align}
+
+در نتیجه:
+\begin{equation}
+\boxed{C_{\mathrm{eq}}^{(\mathrm{exp})} \approx 3.71~\mu\mathrm{F}}
+\qquad
+\boxed{C_{\mathrm{eq}}^{(\mathrm{th})} \approx 3.33~\mu\mathrm{F}}
+\qquad
+\boxed{\delta C \approx 11~\%}.
+\end{equation}
+
+
+
+\section{بررسیِ تجربیِ ظرفیتِ معادلِ خازن‌های موازی}
+
+\begin{wraptable}{l}{4cm}
+
+%\begin{table}[h!]
+\caption{داده‌های تخلیهٔ خازن‌های \(C_1\) و \(C_2\) در اتصالِ موازی و ولتاژ برحسبِ زمان}
+\label{tab4}
+\centering
+\begin{tabular}{cc}
+\hline
+$t \;[\mathrm{s}]$ & $V \;[\mathrm{V}]$ \\
+\hline
+  $0$ & $9.83$ \\
+ $30$ & $8.65$ \\
+ $60$ & $7.59$ \\
+ $90$ & $6.65$ \\
+$120$ & $5.83$ \\
+$150$ & $5.11$ \\
+$180$ & $4.48$ \\
+$210$ & $3.93$ \\
+$240$ & $3.46$ \\
+$270$ & $3.02$ \\
+$300$ & $2.65$ \\
+\hline
+\end{tabular}
+%\end{table}
+\end{wraptable}
+
+خازن‌های $C_1$ و $C_2$ را به‌صورتِ موازی به‌هم بسته و سپس به‌وسیلهٔ یک منبع تغذیهٔ ۱۰ ولتی باردار می‌کنیم. خازن‌ها را از منبع جدا کرده و به ولت‌متر وصل می‌کنیم تا خازن‌ها از راهِ مقاومت داخلیِ ولت‌متر، تخلیه شوند و برای زمان‌های مختلفِ جدول \ref{tab4}، عددی را که ولت‌متر نمایش می‌دهد گزارش کردیم.
+
+
+
+شکل \ref{fig4}، منحنیِ نمایشِ تغییراتِ $V$ بر حسبِ زمان را نشان می‌دهد. با استفاده از این منحنی و تعریفِ $\tau$، ثابتِ زمانی را به‌دست می‌آوریم.
+
+
+\subsection*{تعیینِ ثابتِ زمانیِ مدار از روی منحنی $V(t)$ (خازن‌های $C_1$ و $C_2$ موازی)}
+
+در تخلیهٔ خازن، ولتاژ دو سر خازن معادل بر حسب زمان از رابطهٔ
+\begin{equation}
+V(t) = V_0 e^{-t/\tau}
+\end{equation}
+پیروی می‌کند که در آن $\tau$ ثابت زمانی مدار است. طبق این رابطه،
+\begin{equation}
+V(\tau) = \frac{V_0}{e}.
+\end{equation}
+در این آزمایش، از دادهٔ اولیه در زمان $t=0$ داریم:
+\[
+V_0 \approx 9.83~\mathrm{V},
+\]
+بنابراین:
+\begin{equation}
+V(\tau) = \frac{9.83}{e} \approx 3.62~\mathrm{V}.
+\end{equation}
+
+\begin{figure}[h!]
+\caption{{$V(t)$ برای تخلیهٔ خازن‌های $C_1$ و $C_2$ (اتصال موازی)}},
+\label{fig4}
+\centering
+\pgfplotsset{
+    width=12cm,
+    height=7cm,
+    scale only axis,
+    tick align = outside,
+    yticklabel style={/pgf/number format/fixed},
+}
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel={\lr{[$\mathrm{s}$]} زمان $t$},
+    ylabel={\lr{[$\mathrm{V}$]} ولتاژ $V$},
+    xmin=0, xmax=300,
+    ymin=0, ymax=10.5,
+    xtick distance=30,
+    ytick distance=1,
+    ymajorgrids=true,
+    xmajorgrids=true,
+    minor y tick num=1,
+    minor x tick num=1,
+    grid style=dashed,
+]
+
+\addplot[
+    mark=square,
+    only marks
+]
+coordinates {
+    (0, 9.83)
+    (30, 8.65)
+    (60, 7.59)
+    (90, 6.65)
+    (120, 5.83)
+    (150, 5.11)
+    (180, 4.48)
+    (210, 3.93)
+    (240, 3.46)
+    (270, 3.02)
+    (300, 2.65)
+};
+
+\addplot[
+    smooth,
+    domain=0:300,
+    samples=100
+]
+{9.84072*exp(x / -228.9636) };
+
+\legend{\rl{داده‌های تجربی}, 
+$y=9.84072 \exp{\frac{x}{-228.9636}}$
+}
+
+\end{axis}
+\end{tikzpicture}
+\end{figure}
+
+با توجه به جدول \ref{tab4} و منحنی $V(t) $(شکل \ref{fig4}) مشاهده می‌شود که این مقدار ولتاژ بین دو نقطهٔ
+\[
+\begin{aligned}
+t_1 &= 210~\mathrm{s}, & V_1 &= 3.93~\mathrm{V},\\
+t_2 &= 240~\mathrm{s}, & V_2 &= 3.46~\mathrm{V}
+\end{aligned}
+\]
+قرار دارد. برای تخمین زمان $\tau$ بین این دو نقطه درون‌یابی خطی انجام می‌دهیم. شیب خط بین دو نقطه برابر است با:
+\begin{equation}
+m = \frac{V_2 - V_1}{t_2 - t_1}
+  = \frac{3.46 - 3.93}{240 - 210}
+  = \frac{-0.47}{30}
+  \approx -1.57\times 10^{-2}~\mathrm{V/s}.
+\end{equation}
+اختلاف ولتاژ از $V_1$ تا $V(\tau)$ برابر است با:
+\begin{equation}
+\Delta V = V(\tau) - V_1 = 3.62 - 3.93 \approx -0.31~\mathrm{V}.
+\end{equation}
+پس زمان لازم برای این تغییر ولتاژ:
+\begin{equation}
+\Delta t = \frac{\Delta V}{m}
+         \approx \frac{-0.31}{-1.57\times 10^{-2}}
+         \approx 2.0\times 10^{1}~\mathrm{s}.
+\end{equation}
+در نتیجه زمان متناظر با $V = V_0/e$ (یعنی ثابت زمانی مدار) برابر است با:
+\begin{equation}
+\tau \approx t_1 + \Delta t
+     \approx 210~\mathrm{s} + 20~\mathrm{s}
+     \approx 2.3\times 10^{2}~\mathrm{s}.
+\end{equation}
+
+بنابراین ثابت زمانی مدار خازن‌های $C_1$ و $C_2$ (متصل به صورت موازی) به صورت زیر به‌دست می‌آید:
+\begin{equation}
+\boxed{\tau \approx 2.3\times 10^{2}\ \mathrm{s} \; (\approx 230~\mathrm{s}).}
+\end{equation}
+
+
+اکنون با استفاده از $\tau$ و مقاومت داخلیِ ولت‌متر، ظرفیتِ معادلِ خازن‌ها را به‌دست آورده و خطای آن را با ظرفیتِ معادلِ $C = C_1 + C_2$ محاسبه می‌کنیم.
+
+\subsection*{تعیین ظرفیت معادل خازن‌ها از روی $\tau$ و مقایسه با حالت موازی}
+
+در این بخش، خازن‌های $C_1$ و $C_2$ به صورت موازی بسته شده و از طریق مقاومت داخلی ولت‌متر تخلیه شده‌اند. از بخش قبل، ثابت زمانی مدار را
+\[
+\tau \approx 2.3\times 10^{2}~\mathrm{s}
+\]
+به‌دست آوردیم. همچنین میانگین مقاومت داخلی ولت‌متر از دو آزمایش قبلی برابر بود با
+\[
+\bar{R} \approx 10.5\times 10^{6}~\Omega.
+\]
+
+چون در مدار فقط همین مقاومت سری وجود دارد، تعریف ثابت زمانی می‌دهد:
+\begin{equation}
+\tau = \bar{R}\,C_{\mathrm{eq}}
+\qquad\Rightarrow\qquad
+C_{\mathrm{eq}}^{(\mathrm{exp})} = \frac{\tau}{\bar{R}}.
+\end{equation}
+با جایگذاری مقادیر عددی:
+\begin{align}
+C_{\mathrm{eq}}^{(\mathrm{exp})}
+&= \frac{2.3\times 10^{2}}{10.5\times 10^{6}}~\mathrm{F} \\[1mm]
+&= \frac{2.3}{10.5}\times 10^{-4}~\mathrm{F} \\[1mm]
+&\approx 2.19\times 10^{-5}~\mathrm{F} \\[1mm]
+&\approx 21.9~\mu\mathrm{F}.
+\end{align}
+
+از طرف دیگر، ظرفیت معادل تئوری دو خازن موازی برابر است با:
+\begin{equation}
+C_{\mathrm{eq}}^{(\mathrm{th})} = C_1 + C_2.
+\end{equation}
+با در نظر گرفتن
+\[
+C_1 = 20~\mu\mathrm{F}, \qquad C_2 = 4~\mu\mathrm{F},
+\]
+خواهیم داشت:
+\begin{equation}
+C_{\mathrm{eq}}^{(\mathrm{th})} = 20 + 4 = 24~\mu\mathrm{F}.
+\end{equation}
+
+اکنون خطای نسبی ظرفیت معادل اندازه‌گیری‌شده نسبت به مقدار تئوری را محاسبه می‌کنیم:
+\begin{equation}
+\delta C = \frac{\bigl|C_{\mathrm{eq}}^{(\mathrm{exp})}
+             - C_{\mathrm{eq}}^{(\mathrm{th})}\bigr|}
+            {C_{\mathrm{eq}}^{(\mathrm{th})}} \times 100~\%.
+\end{equation}
+با جایگذاری:
+\begin{align}
+\delta C
+&= \frac{|21.9 - 24.0|}{24.0}\times 100~\% \\[1mm]
+&\approx \frac{2.1}{24.0}\times 100~\% \\[1mm]
+&\approx 8.7~\%.
+\end{align}
+
+در نتیجه:
+\begin{equation}
+\boxed{C_{\mathrm{eq}}^{(\mathrm{exp})} \approx 21.9~\mu\mathrm{F}}
+\qquad
+\boxed{C_{\mathrm{eq}}^{(\mathrm{th})} = 24~\mu\mathrm{F}}
+\qquad
+\boxed{\delta C \approx 8.7~\%.}
+\end{equation}
+
+\paragraph{یادداشت}
+نمودار‌های رسم در شکل های \ref{fig3} و \ref{fig4} ضابطه‌شان با وارد کردن داده‌های جداول، در یک اسکریپت پایتون \footnote{کد پایتون در آدرس \lr{\url{https://abulfadl.ir/genphyslabs2/4/LMA}} قابل مشاهده است.} به‌دست آمده‌اند. در این برنامه از \lr{ Levenberg–Marquardt algorithm} برای این منظور استفاده می‌کند.
+
+مانند سایر الگوریتم‌های کمینه‌سازی عددی، الگوریتم لونبرگ-مارکارد یک رویهٔ تکراری است. برای شروع کمینه‌سازی، کاربر باید یک حدس آغازین برای بردار پارامترها
+$\mathbf{p}$ ارائه کند. در بسیاری مواقع یک حدس ناآگاهانهٔ استاندارد مانند
+\[
+\mathbf{p}^{T} = (1,1,\dots,1)
+\]
+به‌خوبی کار می‌کند. در جاهای دیگر، الگوریتم تنها وقتی کار می‌کند که حدس آغازین تا حدی به جواب نهایی نزدیک باشد.
+
+در هر گام تکرار، بردار پارامترها $\mathbf{p}$ با یک تخمین جدید $\mathbf{p+q}$ جایگزین می‌شود. برای دستیابی به
+$\mathbf{q}$، توابع $f_i(\mathbf{p+q})$ با خطی‌سازی‌شان
+\[
+\mathbf{f(p+q)} \approx \mathbf{f(p)} + J \mathbf{q}
+\]
+تخمین زده می‌شوند که $J$ ژاکوبینِ $\mathbf{f}$ در $\mathbf{p}$ است.
+
+در یک کمینهٔ مجموع مربعات $S$، داریم
+\[
+\nabla_{\mathbf{q}} S = 0.
+\]
+با خطی‌سازی بالا، از این به معادلهٔ زیر می‌رسیم:
+\[
+(J^{T} J)\,\mathbf{q} = - J^{T} \mathbf{f}
+\]
+که $\mathbf{q}$ را می‌توان از آن با وارون کردن $J^{T} J$ به‌دست آورد.
+کلید LMA جایگزینی این معادله با «نسخهٔ میراشده»ٔ آن است:
+\[
+(J^{T} J + \lambda)\,\mathbf{q} = - J^{T} \mathbf{f}
+\]
+ضریب میرایی نامنفی $\lambda$ در هر تکرار تنظیم می‌شود. اگر کاهش $S$
+تند بود، مقدار کوچک‌تری به آن می‌دهیم که الگوریتم را به GNA نزدیک‌تر می‌کند،
+اما اگر یک تکرار کاهش ناکافی نشان داد، $\lambda$ را افزایش داده و یک گام را
+نزدیک‌تر به جهت نزول گرادیانی برمی‌داریم. ضریب میرایی مشابهی در ساماندهی
+تیخونوف دیده می‌شود که در حل مسائل خطی کژنمود سودمند است.
+
+اگر یک طول قدم بازیابی‌شده یا کاهش مجموع مربعات برای آخرین مجموعهٔ پارامترهای
+$\mathbf{p}$ از مقادیر از پیش تعیین‌شده کمتر باشند، تکرار پایان می‌یابد و آخرین
+بردار پارامتر $\mathbf{p}$ به عنوان جواب در نظر گرفته می‌شود.
+
+
+
+\end{document}

@@ -1,0 +1,481 @@
+\documentclass[a4paper, 11pt]{article}
+\usepackage[margin=0.75in]{geometry}
+\usepackage{graphicx, tabularx, hyperref, amsmath}
+\usepackage[siunitx]{circuitikz}
+\usepackage{booktabs}
+\usepackage{pgfplotstable, pgfplots}
+\renewcommand{\arraystretch}{1.2}
+\usepackage{xepersian}
+\settextfont[Scale=0.9]{Dibaj}
+\setdigitfont[Scale=1]{Dibaj}
+
+\begin{document}
+
+\begin{center}
+\textbf{{\huge گزارش‌کار آزمایش شمارهٔ
+1: 
+بررسی قانون اهم
+}}
+
+\end{center}
+
+\hrule
+\noindent\begin{tabular}{rrl}
+اعضای گروه: & ابوالفضل احمدی & 403172283\\
+& نام و نام‌خانوادگی & 403001122
+\end{tabular}\hfill
+\begin{tabular}{rr}
+تاریخ انجام آزمایش: & 10/08/1404 \\
+دستیار آموزشی: &  \\
+\end{tabular}\hfill
+\begin{tabular}{rr}
+گروه:  &  \\
+زیرگروه: \lr{A} &  \\
+\end{tabular}
+\hrule
+
+\section*{اهداف آزمایش و تئوری آزمایش}
+
+ما در این آزمایش به ﺑﺮرﺳﯽ ﺗﺠﺮﺑﯽ ﻗﺎﻧﻮن اﻫﻢ و ﻣﻄﺎﻟﻌﻪ ﭘﺎراﻣﺘﺮﻫﺎي ﻣﺆﺛﺮ در ﻣﻘﺎوﻣﺖ اﻟﮑﺘﺮﯾﮑﯽ ﯾﮏ ﺳﯿﻢ ﻓﻠﺰي پرداختیم.
+
+\section{بستگی اختلاف پتانسیل دو سر سیم به اندازه جریان الکتریکی عبوری از آن}
+
+\begin{figure}[h!]
+\centering
+\caption{مدار ساده اندازه‌گیری}
+\begin{circuitikz}
+  %--- battery on the left ---
+  \draw (0,0) to[battery1] (0,3);
+  % polarity labels
+  %\node at (-0.7,2.3) {$-$};
+  %\node at (-0.7,0.7) {$+$};
+
+  % top and bottom rails to the right
+  \draw (0,3) -- (2,3);
+  \draw (0,0) -- (1,0) to[ammeter] (2,0);
+
+  % vertical voltmeter branch
+  \draw (2,3) to[voltmeter] (2,0);
+
+  %--- diverging leads a and b with tap points (red dots) ---
+  % style for tap points
+  \tikzset{tap/.style={draw=red!60!black, fill=red, circle, inner sep=1.2pt}}
+
+  % upper lead "a"
+  \draw
+   	(2,3) -- (2.5,3) -- (3,2) -- (8,1.5);
+  \draw
+   	(2,0) -- (2.5,0) -- (3,1) -- (8, 1.5);
+
+
+  % tap points on "a"
+  \path (3,2) node[tap] {} (3,1) node[tap] {} (4.4, 1.14) node[tap] {} (4.1,1.89) node[tap] {} (5, 1.8) node[tap] {};
+
+  \node at (3.2,2.2) {$a$};
+  \node at (3.2,0.8) {$b$};
+
+  % common right endpoint and small “)” marker
+  \path (8,1.5) node[tap] {};
+  \node at (8.45,1.5) {1};
+
+\end{circuitikz}
+\label{fig1}
+\end{figure}
+
+در مدار شکل \ref{fig1} جریان را در بازه ۱۰۰ تا ۵۰۰ میلی‌آمپر تغییردادیم و اختلاف پتانسیل دو سر سیم $a$ و $b$ را در جدول \ref{tab1} گزارش کردیم.
+
+\begin{table}[h!]
+\caption{}
+\centering
+\begin{tabular}{cc}
+\hline
+\lr{I (mA)} & \lr{V (v)} \\ \hline
+100 & $2.62$ \\
+200 & $5.31$ \\
+300 & $7.98$ \\
+400 & $10.63$ \\
+500 & $13.27$  \\
+\hline
+\end{tabular}
+\label{tab1}
+\end{table}
+
+
+\begin{figure}[h!]
+\centering
+\pgfplotsset{
+    width=9cm,
+    height=5cm,
+    scale only axis,
+    tick align = outside,
+    yticklabel style={/pgf/number format/fixed},  
+}
+\begin{tikzpicture}
+\begin{axis}[
+title={
+جریان حسب بر را سیم سر دو پتانسیل اختلاف تغییرات نمایش منحنی
+},
+xlabel={
+\lr{[A]}
+جریان
+},
+ylabel={
+\lr{[v]}
+اختلاف پتانسیل 
+},
+ymin=0, ymax=15,
+xmin=0, xmax=0.6,
+ytick distance=2.5,
+xtick distance=0.1,
+legend pos=north west,
+ymajorgrids=true,
+xmajorgrids=true,
+grid style=dashed,
+grid=both,
+minor y tick num=1,
+minor x tick num=1,
+xticklabel style={
+            /pgf/number format/fixed,
+            /pgf/number format/precision=2,
+            /pgf/number format/fixed zerofill
+        },
+]
+
+\addplot[
+mark=square, only marks
+]
+coordinates {
+(0.100 , 2.62)
+(0.200 , 5.31)
+(0.300 , 7.98)
+(0.400 , 10.63)
+(0.500 ,13.27)
+};
+
+\addplot[blue] {26.62*x - 0.024};
+\addlegendentry{$y = 26.62x - 0.024$}
+    
+\end{axis}
+\end{tikzpicture}
+\end{figure}
+
+با استفاده از رگراسیون خطی بهترین منحنی را $y = 26.62x - 0.024$ به‌دست آوردیم.
+
+می‌دانیم که رابطه‌ی بین ولتاژ و جریان طبق قانون اهم:
+\[V=RI\]
+است، که اگر خطی رسم کنیم و از رگرسیون خطی استفاده کنیم:
+\[V = aI + b\]
+در این‌جا $a = 26.62 \, \Omega$ و $b = -0.024 \, \text{\lr{V}}$
+
+بنابراین مقاومت سیم برابر است با:
+\[R = 26.62 \, \Omega\]
+
+\begin{table}[h!]
+\caption{درصدخطا}
+\centering
+\begin{tabular}{cccc}
+\hline
+\lr{$I$ (mA)} & \lr{$V$ (V)} & \lr{$R = \frac{V}{I}$ ($\Omega$)} & \lr{Error (\%)} \\ \hline
+$100$ & $2.62$ & $26.20$ & $1.6$ \\
+$200$ & $5.31$ & $26.55$ & $0.26$ \\
+$300$ & $7.98$ & $26.60$ & $0.08$ \\
+$400$ & $10.63$ & $26.58$ & $0.15$ \\
+$500$ & $13.27$ & $26.54$ & $0.30$ \\
+\hline
+\end{tabular}
+\end{table}
+
+می‌بینی که خطاها کمتر از ۲٪ هستند؛ پس داده‌ها کاملاً با مدل خطی و مقدار $R = 26.62 \, \Omega$ سازگارند.
+
+ضریب عرض از مبدأ 
+$b = -0.024$
+ ولت است که مقدار خیلی کوچکی است (در حد خطای ابزار اندازه‌گیری).
+بنابراین به‌صورت عملی می‌توان گفت خط از مبدأ می‌گذرد، چون طبق قانون اهم برای یک رسانای اهمی ایده‌آل، وقتی 
+$I = 0$
+، باید 
+$V=0$ باشد. انحراف جزئی ناشی از خطای اندازه‌گیری یا مقاومت تماس اتصالات است.
+
+چون رابطه‌ی بین 
+$V$ و 
+$I$ خطی است (خط مستقیم با شیب ثابت)، و خط تقریباً از مبدأ عبور می‌کند، پس سیم از نوع اهمی (\lr{Ohmic}) است؛ یعنی از قانون اهم پیروی می‌کند.
+
+\section{ﺑﺴﺘﮕﯽ  ﻣﻘﺎوﻣﺖ اﻟﮑﺘﺮﯾﮑﯽ ﺑﻪ ﻃﻮل ﺳﯿﻢ $R=f(L)$}
+
+\begin{figure}[h!]
+\centering
+\caption{مدار ساده اندازه‌گیری}
+\begin{circuitikz}
+  %--- battery on the left ---
+  \draw (0,0) to[battery1] (0,3);
+  % polarity labels
+  %\node at (-0.7,2.3) {$-$};
+  %\node at (-0.7,0.7) {$+$};
+
+  % top and bottom rails to the right
+  \draw (0,3) -- (2,3);
+  \draw (0,0) -- (1,0) to[ammeter] (2,0);
+
+  % vertical voltmeter branch
+  \draw (2.5,3) to[voltmeter] (5,3) -- (5, 1.8);
+
+
+
+  %--- diverging leads a and b with tap points (red dots) ---
+  % style for tap points
+  \tikzset{tap/.style={draw=red!60!black, fill=red, circle, inner sep=1.2pt}}
+
+  % upper lead "a"
+  \draw
+   	(2,3) -- (2.5,3) -- (3,2) -- (8,1.5);
+  \draw
+   	(2,0) -- (2.5,0) -- (3,1) -- (8, 1.5);
+
+
+  % tap points on "a"
+  \path (3,2) node[tap] {} (3,1) node[tap] {} (4.4, 1.14) node[tap] {} (4.1,1.89) node[tap] {} (5, 1.8) node[tap] {};
+
+  \node at (3.2,2.2) {$a$};
+  \node at (3.2,0.8) {$b$};
+  \node at (5.7,2) {27 \lr{cm}};
+  \node at (4.05,2.2) {10 \lr{cm}};
+  \node at (4.4,0.8) {80 \lr{cm}};
+  \node at (8,1.1) {100 \lr{cm}};
+
+  % common right endpoint and small “)” marker
+  \path (8,1.5) node[tap] {};
+  \node at (8.45,1.5) {1};
+
+\draw[->]
+  (5,3) -- (5, 1.8);
+
+\end{circuitikz}
+\label{fig2}
+\end{figure}
+
+با استفاده از ولت‌متر برای طول‌های داده شده در جدول \ref{tab2}، اختلاف پتانسیل را نسبت به نقطه $a$ اندازه‌گیری کردیم و در جدول \ref{tab2} گزارش کردیم.
+
+\begin{table}[h!]
+\caption{}
+\centering
+\begin{tabular}{ccc}
+\hline
+\lr{$l$ (cm)} & \lr{V (v)} & \lr{R ($\Omega$)} \\ \hline
+10  & $0.68$ & $2.72$\\
+27  & $1.79$ & $7.16$\\
+50  & $3.30$ & $13.21$\\
+80  & $5.32$ & $21.23$\\
+100 & $6.61$ & $26.44$\\
+\hline
+\multicolumn{3}{c}{\lr{I = $250$ (mA)}}
+\end{tabular}
+\label{tab2}
+\end{table}
+
+\begin{figure}[h!]
+\centering
+\pgfplotsset{
+    width=9cm,
+    height=5cm,
+    scale only axis,
+    tick align = outside,
+    yticklabel style={/pgf/number format/fixed},  
+}
+\begin{tikzpicture}
+\begin{axis}[
+title={
+$l$ طول به نسبت $R$ تغییرات نمایش منحنی
+},
+xlabel={
+\lr{[cm]}
+طول
+},
+ylabel={
+\lr{[$\Omega$]}
+مقاومت
+},
+ymin=0, ymax=30,
+xmin=0, xmax=1,
+ytick distance=5,
+xtick distance=0.1,
+legend pos=north west,
+ymajorgrids=true,
+xmajorgrids=true,
+grid style=dashed,
+grid=both,
+minor y tick num=1,
+minor x tick num=1,
+xticklabel style={
+            /pgf/number format/fixed,
+            /pgf/number format/precision=2,
+            /pgf/number format/fixed zerofill
+        },
+]
+
+\addplot[
+mark=square, only marks
+]
+coordinates {
+(0.10 ,2.72)
+(0.27 ,7.16)
+(0.50 ,13.21)
+(0.80 ,21.23)
+(1.00,26.44)
+};
+
+\addplot[blue] {26.40*x+0.05};
+\addlegendentry{$y=26.40x+0.05$}
+    
+\end{axis}
+\end{tikzpicture}
+\end{figure}
+
+با استفاده از رگراسیون خطی بهترین محنی $y=26.40x+0.05$ به دست‌ آمد که یعنی شیب خط برابر  $26.40$ است.
+
+\section{ﺗﺎﺑﻌﯿﺖ ﻣﻘﺎوﻣﺖ ﺑﺎ ﻗﻄﺮ ﺳﯿﻢ $R=f(s)$}
+
+ابتدا سطح مقطع سیم‌ها را به دست آورد وو سپس منحنی نمایش تغییرات مقاومت برحسب عکس سطح مقطع سیم را نمایش می‌دهیم.
+
+\begin{table}[h!]
+\caption{}
+\centering
+\begin{tabular}{cccc}
+\hline
+شماره سیم & \lr{(mm)} قطر & \lr{V (v)} & \lr{R ($\Omega$)} \\
+\hline
+$(1) \; a,b$ & $0.25$ & $6.62$ & $26.48$ \\
+$(2) \; c,d$ & $0.40$ & $2.13$ & $8.52$ \\
+$(3) \; e,f$ & $0.30$ & $3.80$ & $15.20$ \\
+\hline
+\multicolumn{4}{c}{\lr{I = $250$ (mA)}}
+\end{tabular}
+\end{table}
+
+
+$$
+\begin{aligned}
+a,b) & (1.25 \times 10^{-4})^2 \times \pi=4.9 \times 10^{-8}\\
+c,d) &(2 \times 10^{-4})^2 \times \pi=1.26 \times 10^{-7}\\
+e,f) &(1.5 \times 10^{-4})^2 \times \pi=7.06 \times 10^{-8}\\
+\end{aligned}
+$$
+
+
+حال هر دو داده را داریم و از روش کمترین مربعات شیب خط را به دست می‌آوریم که مقدار آن طبق فرمول برابر
+
+$$R=0.0348-0.4500$$
+
+حال منحنی تتغییرات مقاومت برحسب عکس سطح مقطع سیم را داریم:
+
+\begin{table}[h!]
+\caption{}
+\centering
+\begin{tabular}{cc}
+\hline
+\lr{R ($\Omega$)}
+& \lr{$\frac{1}{s}$ (mm$^{-2}$)}  \\
+\hline
+$26.48$ & $20.36$\\
+$15.20$& $56.49$ \\
+$8.52$ & $126.60$ \\
+\hline
+\end{tabular}
+\end{table}
+
+
+\begin{figure}[h!]
+\centering
+\pgfplotsset{
+    width=9cm,
+    height=5cm,
+    scale only axis,
+    tick align = outside,
+    yticklabel style={/pgf/number format/fixed},  
+}
+\begin{tikzpicture}
+\begin{axis}[
+title={
+مقاومت با سطح ارتباط
+},
+xlabel={
+\lr{[$\Omega$]}
+مقاومت
+},
+ylabel={
+\lr{[mm$^{-2}$]}
+سطح
+},
+ymin=0, ymax=130,
+xmin=0, xmax=30,
+ytick distance=20,
+xtick distance=5,
+legend pos=north west,
+ymajorgrids=true,
+xmajorgrids=true,
+grid style=dashed,
+grid=both,
+minor y tick num=1,
+minor x tick num=1,
+xticklabel style={
+            /pgf/number format/fixed,
+            /pgf/number format/precision=2,
+            /pgf/number format/fixed zerofill
+        },
+]
+
+\addplot[
+mark=square, only marks
+]
+coordinates {
+(26.48, 126.60)
+(15.20, 56.49)
+(8.52, 20.36)
+};
+
+\addplot[blue] {0.0348*x -0.45};
+%\addlegendentry{$y=26.40x+0.05$}
+    
+\end{axis}
+\end{tikzpicture}
+\end{figure}
+
+\section{ﺗﺎﺑﻌﯿﺖ ﻣﻘﺎوﻣﺖ ﺑﺎ ﻣﻘﺎوﻣﺖ وﯾﮋه $R=f(\rho)$}
+
+\begin{table}[h!]
+\caption{}
+\centering
+\begin{tabular}{rcc}
+\hline
+جنس و شماره سیم & \lr{V (v)} & \lr{R ($\Omega$)} \\ \hline
+$(3) \; e,f$ کروم نیکل & $3.81$ & $15.24$\\
+$(4) \; g,h$ گالوانیزه & $0.86$ & $3.44$ \\
+$(5) \; i,j$ کروم خالص & $3.00$ & $12.00$\\
+\hline
+\multicolumn{3}{c}{\lr{I = $250$ (mA)}}
+\end{tabular}
+
+\end{table}
+
+مقدار مقاومت وسژه را برحسب شیب نمودار قبل مخاسبه می‌کنیم:
+\[R=\rho \frac{l}{s} \Rightarrow \frac{R}{l} = \frac{\rho}{s}\]
+
+پس با توجه به این‌که شیب نمودار $\frac{\rho}{s}$ است و مقدار مقاومت مساحت $0.0491$ \lr{mm $^2$} است.
+\[\rho_1 = \frac{Rs}{l} = 0.02696 \times 10^{-5} \text{\lr{$\Omega$ m}}\]
+
+مقدار مقاومت ویژه با توجه به نمودار(طول سیم‌ها برابر ۱ متر است.):
+\[R =\rho \frac{l}{s} \Rightarrow \frac{R}{\frac{1}{s}} =\rho l\]
+
+\[\rho_2 = \frac{Rs}{l} = 0.0346 \times 10^{-5} \text{\lr{$\Omega$ m}}\]
+
+حال مقدار متوسط مقاومت ویژه:
+\[\bar{\rho} = \frac{\rho_1 + \rho_2}{2} = 0.033 \times 10{-5} \text{\lr{$\Omega$ m}}\]
+
+تابعیت مقاومت با مقاومت ویژه را $R = f(\rho)$ را نشان می‌دهیم و مقاومت ویژه را با توحه به رابطه $R = \rho \frac{l}{A}$ به دست می‌اوریم:
+
+\[
+\begin{aligned}
+R_3 & = \frac{V_3}{I} = 3.91 \Omega \rightarrow \rho_3 = 12.27 \times 10 ^{-8} \Omega \text{\lr{m}} \\
+R_3 & = \frac{V_3}{I} = 35.48 \Omega \rightarrow \rho_3 = 111.45 \times 10 ^{-8} \Omega \text{\lr{m}} \\
+R_3 & = \frac{V_3}{I} = 18.90 \Omega \rightarrow \rho_3 = 59.47 \times 10 ^{-8} \Omega \text{\lr{m}} \\
+\end{aligned}
+\]
+\end{document}

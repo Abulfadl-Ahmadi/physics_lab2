@@ -1,0 +1,607 @@
+\documentclass[a4paper,11pt]{article}
+
+% ---------- Page layout ----------
+\usepackage[
+    top=0.75in,
+    bottom=1in,
+    left=0.75in,
+    right=0.75in
+]{geometry}
+\setlength{\parskip}{0.35em}
+\setlength{\parindent}{0pt}
+\linespread{1.15}
+
+% ---------- Packages ----------
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage[siunitx]{circuitikz}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta,angles,quotes}
+
+\usepackage[usenames,dvipsnames]{xcolor}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue,
+    citecolor=blue
+}
+
+% ---------- Persian ----------
+\usepackage{xepersian}
+\settextfont[Scale=0.9]{Dibaj}
+\setdigitfont[Scale=1]{Dibaj}
+
+% ---------- Useful commands ----------
+\newcommand{\lrhz}{\lr{Hz}}
+\newcommand{\lrms}{\lr{rms}}
+\newcommand{\ii}{\mathrm{i}} % imaginary unit (avoid confusion with current i)
+\newcommand{\dd}{\,\mathrm{d}}
+\newcommand{\e}{\mathrm{e}}
+\newcommand{\abs}[1]{\left|#1\right|}
+%\newcommand{\ang}[1]{\left(#1\right)}
+\newcommand{\degC}{^{\circ}}
+
+% ---------- Document ----------
+\begin{document}
+
+\begin{center}
+\textbf{{\huge گزارش‌کار آزمایش شمارهٔ ۶: مطالعهٔ مدارها با جریان متناوب}}
+\end{center}
+
+\hrule
+\noindent
+\begin{tabular}{rrl}
+اعضای گروه: & ابوالفضل احمدی & 403172283\\
+& نام و نام‌خانوادگی & 403001122
+\end{tabular}\hfill
+\begin{tabular}{rr}
+تاریخ انجام آزمایش: & 22/09/1404 \\
+دستیار آموزشی: & امیری‌نژاد \\
+\end{tabular}\hfill
+\begin{tabular}{rr}
+گروه:  & 3  \\
+زیرگروه: & \lr{A} \\
+\end{tabular}
+\hrule
+
+% =========================================================
+\section*{اهداف آزمایش و خلاصهٔ نتایج}
+در این آزمایش رفتار دامنه و فاز ولتاژ و جریان در مدارهای سری \lr{RL}، \lr{RC} و \lr{RLC} با منبع متناوب \lr{50~Hz} بررسی شد. داده‌های اندازه‌گیری‌شده برای \lr{$V_R$}، \lr{$V_L$}، \lr{$V_C$}، \lr{$V_Z$} و \lr{$I$} به کمک نمودارهای برداری (فازوری) تحلیل شدند تا:
+\begin{itemize}
+    \item امپدانس هر مدار و زاویهٔ فاز \lr{$\varphi$} بین جریان و ولتاژ کلی تعیین شود.
+    \item مقاومت اهمی سیم‌پیچ \lr{$r_L$} و ضریب خودالقایی \lr{$L$} از مدار \lr{RL} استخراج شود.
+    \item ظرفیت خازن \lr{$C$} از مدار \lr{RC} محاسبه شود.
+    \item در مدار \lr{RLC}، هم‌نهشتی برداری ولتاژها بررسی و امپدانس تئوری (با استفاده از \lr{$L$} و \lr{$C$} به‌دست‌آمده) با امپدانس اندازه‌گیری‌شده مقایسه شود.
+\end{itemize}
+
+\textbf{خلاصهٔ عددی (بر اساس داده‌های ثبت‌شده در این گزارش):}
+\[
+R \approx 104~\Omega,\qquad r_L \approx 40~\Omega,\qquad L \approx 1.18~\mathrm{H},\qquad
+C \approx 20~\mu\mathrm{F}.
+\]
+همچنین امپدانس‌های به‌دست‌آمده حدوداً
+\[
+\abs{Z_{RL}}\approx 397~\Omega,\qquad
+\abs{Z_{RC}}\approx 189~\Omega,\qquad
+\abs{Z_{RLC}}\approx 267~\Omega
+\]
+به‌دست آمد که با پیش‌بینی‌های تئوری (با لحاظ مقاومت اهمی سیم‌پیچ) سازگار است.
+
+% =========================================================
+\section{مبانی نظری}
+\subsection{سیگنال سینوسی و کمیت مؤثر \lr{(RMS)}}
+فرض کنید ولتاژ منبع به شکل
+\[
+v(t)=V_m\sin(\omega t+\theta)
+\]
+باشد که در آن:
+\begin{itemize}
+\item $V_m$ دامنهٔ بیشینه (قله) است.
+\item $\omega=2\pi f$ بسامد زاویه‌ای است (واحد: \lr{rad/s}).
+\item $f$ بسامد (واحد: \lr{Hz}) و $\theta$ فاز اولیه است.
+\end{itemize}
+
+ولت‌مترهای \lr{AC} معمولاً مقدار \emph{مؤثر} یا \lrms{} را نشان می‌دهند. تعریف دقیق مقدار مؤثر:
+\[
+V_{\text{rms}}=\sqrt{\frac{1}{T}\int_{0}^{T} v^2(t)\,\dd t},\qquad T=\frac{2\pi}{\omega}.
+\]
+برای سینوس:
+\[
+v^2(t)=V_m^2\sin^2(\omega t+\theta).
+\]
+با استفاده از هویت
+\[
+\sin^2 x=\frac{1-\cos(2x)}{2},
+\]
+داریم
+\[
+\frac{1}{T}\int_0^T \sin^2(\omega t+\theta)\,\dd t
+=\frac{1}{T}\int_0^T \frac{1-\cos(2\omega t+2\theta)}{2}\,\dd t
+=\frac{1}{2}-\frac{1}{2T}\int_0^T \cos(2\omega t+2\theta)\,\dd t.
+\]
+ولی انتگرال کسینوس روی یک دورهٔ کامل صفر می‌شود (زیرا تابع تناوبی است و متوسطش روی دوره صفر است)، پس:
+\[
+\frac{1}{T}\int_0^T \sin^2(\omega t+\theta)\,\dd t=\frac{1}{2}
+\quad\Rightarrow\quad
+V_{\text{rms}}=\frac{V_m}{\sqrt{2}}.
+\]
+همین نتیجه برای جریان نیز برقرار است: $I_{\text{rms}}=I_m/\sqrt{2}$.
+
+\subsection{رابطهٔ ولتاژ و جریان در عناصر \lr{R}، \lr{L}، \lr{C}}
+در مدارهای خطیِ زمان‌ناوردا، روابط بنیادی عناصر به صورت زیر است:
+
+\paragraph{مقاومت (\lr{R}).}
+قانون اهم:
+\[
+v_R(t)=R\,i(t).
+\]
+بنابراین اگر $i(t)$ سینوسی باشد، $v_R(t)$ نیز سینوسی و \emph{هم‌فاز} با جریان است.
+
+\paragraph{القاگر ایده‌آل (\lr{L}).}
+رابطهٔ بنیادی:
+\[
+v_L(t)=L\frac{\dd i(t)}{\dd t}.
+\]
+اگر
+\[
+i(t)=I_m\sin(\omega t-\varphi)
+\]
+آنگاه
+\[
+\frac{\dd i}{\dd t}=\omega I_m\cos(\omega t-\varphi)=\omega I_m\sin\!\left(\omega t-\varphi+\frac{\pi}{2}\right).
+\]
+پس:
+\[
+v_L(t)=\omega L I_m\sin\!\left(\omega t-\varphi+\frac{\pi}{2}\right).
+\]
+یعنی ولتاژ القاگر نسبت به جریان \emph{$90^\circ$ تقدم فاز} دارد. مقدار دامنه:
+\[
+V_{Lm}=\omega L I_m \quad\Rightarrow\quad X_L=\omega L
+\]
+که $X_L$ را \emph{راکتانس القایی} می‌نامند.
+
+\paragraph{خازن ایده‌آل (\lr{C}).}
+رابطهٔ بنیادی:
+\[
+i_C(t)=C\frac{\dd v_C(t)}{\dd t}.
+\]
+اگر
+\[
+i(t)=I_m\sin(\omega t-\varphi)
+\]
+باشد، با انتگرال‌گیری:
+\[
+v_C(t)=\frac{1}{C}\int i(t)\,\dd t
+=\frac{I_m}{C}\int \sin(\omega t-\varphi)\,\dd t
+=-\frac{I_m}{\omega C}\cos(\omega t-\varphi).
+\]
+و چون $-\cos x=\sin(x-\pi/2)$:
+\[
+v_C(t)=\frac{I_m}{\omega C}\sin\!\left(\omega t-\varphi-\frac{\pi}{2}\right).
+\]
+پس ولتاژ خازن نسبت به جریان \emph{$90^\circ$ تأخیر فاز} دارد. همچنین:
+\[
+V_{Cm}=\frac{I_m}{\omega C}\quad\Rightarrow\quad X_C=\frac{1}{\omega C}
+\]
+که $X_C$ \emph{راکتانس خازنی} است.
+
+\subsection{نمایش فازوری و امپدانس مختلط}
+برای جمع‌کردن ولتاژهای سینوسی هم‌بسامد، نمایش فازوری بسیار مفید است. یک سینوس را به‌صورت قسمت حقیقی/موهومی یک کمیت مختلط می‌نویسیم. مثلاً اگر:
+\[
+v(t)=V_m\sin(\omega t+\theta),
+\]
+می‌توان نوشت:
+\[
+v(t)=\Im\!\left\{ \tilde V\,\e^{\ii \omega t} \right\},\qquad \tilde V=V_m\e^{\ii\theta}.
+\]
+به همین شکل:
+\[
+i(t)=\Im\!\left\{ \tilde I\,\e^{\ii \omega t} \right\}.
+\]
+در این نمایش، مشتق‌گیری ساده می‌شود:
+\[
+\frac{\dd}{\dd t}\Big(\tilde I \e^{\ii\omega t}\Big)=\ii\omega \tilde I \e^{\ii\omega t}.
+\]
+پس برای عناصر ایده‌آل:
+\[
+\tilde V_R=R\,\tilde I,\qquad
+\tilde V_L=\ii\omega L\,\tilde I,\qquad
+\tilde V_C=\frac{1}{\ii\omega C}\,\tilde I=-\ii\frac{1}{\omega C}\tilde I.
+\]
+بنابراین \textbf{امپدانس‌های مختلط} به صورت
+\[
+Z_R=R,\qquad Z_L=\ii\omega L,\qquad Z_C=\frac{1}{\ii\omega C}
+\]
+تعریف می‌شوند و برای مدار سری:
+\[
+\tilde V_Z=\tilde I\,Z_{\text{eq}},\qquad Z_{\text{eq}}=Z_1+Z_2+\cdots
+\]
+(چون جریان در مدار سری برای همهٔ عناصر یکسان است و طبق قانون کیرشهف، جمع ولتاژها برابر ولتاژ منبع می‌شود.)
+
+\subsection{مدار سری \lr{RLC}: استنتاج $Z$ و $\varphi$}
+برای مدار سری \lr{RLC} ایده‌آل:
+\[
+Z_{\text{eq}} = R + \ii\omega L + \frac{1}{\ii\omega C}
+= R + \ii\Big(\omega L-\frac{1}{\omega C}\Big).
+\]
+پس:
+\[
+\abs{Z}=\sqrt{R^2+\Big(\omega L-\frac{1}{\omega C}\Big)^2},
+\qquad
+\varphi=\arg(Z)=\arctan\!\left(\frac{\omega L-\frac{1}{\omega C}}{R}\right).
+\]
+اگر $\omega L>\frac{1}{\omega C}$ مدار \emph{سلفی} است و جریان از ولتاژ \emph{عقب می‌افتد} (در قرارداد $i(t)=I_m\sin(\omega t-\varphi)$، داریم $\varphi>0$).
+اگر $\omega L<\frac{1}{\omega C}$ مدار \emph{خازنی} است و جریان \emph{پیش‌فاز} می‌شود ($\varphi<0$).
+
+\subsection{تشدید \lr{(Resonance)}}
+شرط تشدیدِ سری زمانی است که بخش موهومی امپدانس صفر شود:
+\[
+\omega L-\frac{1}{\omega C}=0
+\quad\Rightarrow\quad
+\omega_0=\frac{1}{\sqrt{LC}},\qquad
+f_0=\frac{1}{2\pi\sqrt{LC}}.
+\]
+در $\omega=\omega_0$ داریم $Z_{\text{eq}}=R$ و دامنهٔ جریان (برای ولتاژ ثابت) بیشینه می‌شود.
+
+\subsection{عناصر غیرایده‌آل: مقاومت اهمی سیم‌پیچ}
+در عمل، سیم‌پیچ علاوه بر اندوکتانس، دارای مقاومت اهمی سری $r_L$ است. بنابراین:
+\[
+Z_L^{(\text{واقعی})}=r_L+\ii\omega L.
+\]
+در نتیجه، در مدارهای سری باید $R_{\text{tot}}=R+r_L$ را به عنوان بخش حقیقی در نظر گرفت و:
+\[
+\tan\varphi = \frac{\omega L-\frac{1}{\omega C}}{R+r_L}\qquad(\text{در ساده‌ترین تقریب}).
+\]
+در آزمایش، $r_L$ را می‌توان با تجزیهٔ برداری ولتاژ سیم‌پیچ به مؤلفهٔ هم‌فاز و عمود بر جریان استخراج کرد (بخش عملی در ادامه).
+
+% =========================================================
+\section{وسایل، آرایش مدار و روش انجام}
+\subsection{وسایل آزمایش}
+\begin{itemize}
+\item منبع تغذیهٔ جریان متناوب (\lr{AC}, \lr{50~Hz})
+\item مقاومت $R$
+\item القاگر (سیم‌پیچ) $L$ با مقاومت داخلی $r_L$
+\item خازن $C$
+\item ولت‌متر \lr{AC} و آمپرمتر \lr{AC} (یا مولتی‌متر در حالت \lr{AC})
+\end{itemize}
+
+\subsection{آرایش مدارها}
+\begin{figure}[h!]
+\centering
+\begin{minipage}{0.29\textwidth}
+\centering
+\begin{circuitikz}
+\draw (0,0) to[sV,l_=~] (0,2)
+      to[R,l=$R$] (2,2)
+      to[L,l=$L$] (4,2)
+      -- (4,0) -- (0,0);
+\end{circuitikz}
+\caption{مدار سری \lr{RL}}
+\end{minipage}\hfill
+\begin{minipage}{0.29\textwidth}
+\centering
+\begin{circuitikz}
+\draw (0,0) to[sV,l_=~] (0,2)
+      to[R,l=$R$] (2,2)
+      to[C,l=$C$] (4,2)
+      -- (4,0) -- (0,0);
+\end{circuitikz}
+\caption{مدار سری \lr{RC}}
+\end{minipage}\hfill
+\begin{minipage}{0.38\textwidth}
+\centering
+\begin{circuitikz}
+\draw (0,0) to[sV,l_=~] (0,2)
+      to[R,l=$R$] (2,2)
+      to[L,l=$L$] (4,2)
+      to[C,l=$C$] (6,2)
+      -- (6,0) -- (0,0);
+\end{circuitikz}
+\caption{مدار سری \lr{RLC}}
+\end{minipage}
+\end{figure}
+
+\subsection{روش انجام (خلاصهٔ عملیاتی)}
+در هر سه مدار:
+\begin{itemize}
+\item قبل از روشن کردن منبع، ولتاژ خروجی روی صفر قرار داده شد و سپس به‌آرامی افزایش یافت.
+\item بسامد منبع روی \lr{50~Hz} ثابت نگه داشته شد.
+\item ولتاژ کلی مدار \lr{$V_Z$} در هر اندازه‌گیری ثبت شد (در این گزارش حدود $5.3~\mathrm{V}$).
+\end{itemize}
+
+% =========================================================
+\section{نتایج و تحلیل: مدار \lr{RL}}
+\subsection{داده‌های اندازه‌گیری}
+\begin{table}[h!]
+\centering
+\caption{داده‌های مدار \lr{RL} (مقادیر مؤثر)}
+\label{tab:RL}
+\begin{tabular}{cccc}
+\toprule
+$V_R~[\mathrm{V}]$ & $V_L~[\mathrm{V}]$ & $V_Z~[\mathrm{V}]$ & $I~[\mathrm{mA}]$ \\
+\midrule
+$1.42$ & $5.03$ & $5.37$ & $13.54$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{تحلیل فازوری و استخراج $r_L$ و $L$}
+در این مدار، جریانِ سری یکسان است. ولتاژ روی مقاومت $V_R$ هم‌فاز با جریان است؛ بنابراین آن را روی محور افقی (مرجع فاز) می‌گذاریم.
+
+برای سیم‌پیچِ واقعی:
+\[
+\tilde V_L = \tilde I\,(r_L+\ii X_L),
+\]
+پس اگر زاویهٔ بین $V_R$ (محور جریان) و $V_L$ را $\delta$ بنامیم، مؤلفه‌های $V_L$ چنین‌اند:
+\[
+V_{r_L}=V_L\cos\delta,\qquad V_{X_L}=V_L\sin\delta.
+\]
+
+برای یافتن $\delta$ از مثلثِ برداری $\tilde V_Z=\tilde V_R+\tilde V_L$ استفاده می‌کنیم. با ضرب داخلی:
+\[
+\abs{V_Z}^2=\abs{V_R+V_L}^2=V_R^2+V_L^2+2V_RV_L\cos\delta,
+\]
+بنابراین:
+\[
+\cos\delta=\frac{V_Z^2-V_R^2-V_L^2}{2V_RV_L}.
+\]
+با قرار دادن داده‌ها:
+\[
+\cos\delta=\frac{(5.37)^2-(1.42)^2-(5.03)^2}{2(1.42)(5.03)}\approx 0.1064
+\quad\Rightarrow\quad
+\delta\approx 83.9^\circ.
+\]
+
+پس:
+\[
+V_{r_L}=V_L\cos\delta \approx 5.03\times 0.1064 \approx 0.535~\mathrm{V},
+\qquad
+V_{X_L}=V_L\sin\delta \approx 5.00~\mathrm{V}.
+\]
+اکنون:
+\[
+r_L=\frac{V_{r_L}}{I}\approx \frac{0.535}{0.01354}\approx 39.5~\Omega,
+\qquad
+X_L=\frac{V_{X_L}}{I}\approx \frac{5.00}{0.01354}\approx 370~\Omega.
+\]
+و چون $X_L=\omega L$:
+\[
+L=\frac{X_L}{2\pi f}\approx \frac{370}{2\pi\times 50}\approx 1.18~\mathrm{H}.
+\]
+
+\subsection{امپدانس و زاویهٔ فاز مدار}
+بخش حقیقی امپدانس مدار:
+\[
+R_{\text{tot}}=R+r_L,\qquad R=\frac{V_R}{I}\approx \frac{1.42}{0.01354}\approx 105~\Omega,
+\]
+پس $R_{\text{tot}}\approx 144~\Omega$.
+امپدانس اندازه‌گیری‌شده:
+\[
+\abs{Z}=\frac{V_Z}{I}\approx \frac{5.37}{0.01354}\approx 397~\Omega.
+\]
+و اختلاف فاز:
+\[
+\varphi=\arctan\!\left(\frac{X_L}{R_{\text{tot}}}\right)\approx \arctan\!\left(\frac{370}{144}\right)\approx 68.6^\circ.
+\]
+
+\subsection{پاسخ پرسش آزمایش}
+\textbf{آیا $V_L$ بر $V_R$ عمود است؟} در مدل ایده‌آل باید عمود باشد؛ اما چون سیم‌پیچ مقاومت اهمی دارد، $V_L$ علاوه بر مؤلفهٔ عمودی (ناشی از $L$) یک مؤلفهٔ افقی (ناشی از $r_L$) هم دارد و در نتیجه کاملاً عمود نیست. محاسبهٔ $\delta\approx 83.9^\circ$ دقیقاً همین انحراف از $90^\circ$ را نشان می‌دهد.
+
+\begin{figure}[h!]
+\caption{نمودار فازوری ولتاژها در مدار \lr{RL} (مرجع: جریان)}
+\label{fig:phasorRL}
+\centering
+\def\sc{0.8}
+\begin{tikzpicture}[>=Stealth]
+\coordinate (O) at (0,0);
+\coordinate (A) at ({\sc*1.42},0);
+\coordinate (B) at ({\sc*(1.42 + 5.03*cos(83.9))},{\sc*(5.03*sin(83.9))});
+\draw[->, thick, blue] (O) -- (A) node[below right] {$V_R$};
+\draw[->, thick, red] (A) -- (B) node[above right] {$V_L$};
+\draw[->, thick, black] (O) -- (B) node[above] {$V_Z$};
+\draw[->] (0.55,0) arc (0:83.9:0.55);
+\node at (0.65,0.20) {$\delta$};
+\end{tikzpicture}
+\end{figure}
+
+% =========================================================
+\section{نتایج و تحلیل: مدار \lr{RC}}
+\subsection{داده‌های اندازه‌گیری}
+\begin{table}[h!]
+\centering
+\caption{داده‌های مدار \lr{RC} (مقادیر مؤثر)}
+\label{tab:RC}
+\begin{tabular}{cccc}
+\toprule
+$V_R~[\mathrm{V}]$ & $V_C~[\mathrm{V}]$ & $V_Z~[\mathrm{V}]$ & $I~[\mathrm{mA}]$ \\
+\midrule
+$2.93$ & $4.46$ & $5.34$ & $28.29$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{محاسبهٔ $R$، $X_C$ و $C$}
+در خازن ایده‌آل، $V_C$ نسبت به جریان $90^\circ$ تأخیر فاز دارد و بنابراین در نمودار فازوری، $V_R$ و $V_C$ عمود هستند. ابتدا مقاومت:
+\[
+R=\frac{V_R}{I}\approx \frac{2.93}{0.02829}\approx 103.6~\Omega.
+\]
+راکتانس خازنی:
+\[
+X_C=\frac{V_C}{I}\approx \frac{4.46}{0.02829}\approx 157.7~\Omega.
+\]
+و از $X_C=\frac{1}{\omega C}$:
+\[
+C=\frac{1}{\omega X_C}=\frac{1}{2\pi f X_C}\approx
+\frac{1}{2\pi\times 50\times 157.7}\approx 2.02\times 10^{-5}~\mathrm{F}\approx 20.2~\mu\mathrm{F}.
+\]
+
+\subsection{بررسی سازگاری برداری و استخراج $Z$ و $\varphi$}
+اگر خازن تقریباً ایده‌آل باشد:
+\[
+V_Z^2 \simeq V_R^2+V_C^2.
+\]
+با داده‌ها:
+\[
+\sqrt{V_R^2+V_C^2}=\sqrt{(2.93)^2+(4.46)^2}\approx 5.33~\mathrm{V},
+\]
+که با $V_Z=5.34~\mathrm{V}$ در حد خطای اندازه‌گیری سازگار است.
+
+امپدانس اندازه‌گیری‌شده:
+\[
+\abs{Z}=\frac{V_Z}{I}\approx \frac{5.34}{0.02829}\approx 189~\Omega.
+\]
+و زاویهٔ فاز (مدار خازنی است):
+\[
+\varphi=\arctan\!\left(\frac{-X_C}{R}\right)\approx -\arctan\!\left(\frac{157.7}{103.6}\right)\approx -56.7^\circ.
+\]
+
+\subsection{پاسخ پرسش آزمایش}
+\textbf{آیا $V_C$ بر $V_R$ عمود است؟} با توجه به اینکه $V_Z \approx \sqrt{V_R^2+V_C^2}$، می‌توان نتیجه گرفت که در این آزمایش خازن تقریباً رفتار ایده‌آل داشته و $V_C$ تقریباً بر $V_R$ عمود است.
+
+\begin{figure}[h!]
+\caption{نمودار فازوری ولتاژها در مدار \lr{RC} (مرجع: جریان)}
+\label{fig:phasorRC}
+\centering
+\def\sc{0.8}
+\begin{tikzpicture}[>=Stealth]
+\coordinate (O) at (0,0);
+\coordinate (A) at ({\sc*2.93},0);
+\coordinate (B) at ({\sc*2.93},{-\sc*4.46});
+\draw[->, thick, blue] (O) -- (A) node[below right] {$V_R$};
+\draw[->, thick, orange] (A) -- (B) node[right] {$V_C$};
+\draw[->, thick, black] (O) -- (B) node[below] {$V_Z$};
+\end{tikzpicture}
+\end{figure}
+
+% =========================================================
+\section{نتایج و تحلیل: مدار \lr{RLC}}
+\subsection{داده‌های اندازه‌گیری}
+\begin{table}[h!]
+\centering
+\caption{داده‌های مدار \lr{RLC} (مقادیر مؤثر)}
+\label{tab:RLC}
+\begin{tabular}{cccccc}
+\toprule
+$V_R~[\mathrm{V}]$ & $V_L~[\mathrm{V}]$ & $V_C~[\mathrm{V}]$ & $V_{RL}~[\mathrm{V}]$ & $V_Z~[\mathrm{V}]$ & $I~[\mathrm{mA}]$ \\
+\midrule
+$2.09$ & $7.59$ & $3.22$ & $8.14$ & $5.34$ & $20.04$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{استخراج زاویهٔ سیم‌پیچ و برآورد مجدد $r_L$ و $L$}
+در این بخش ولتاژ $V_{RL}$ روی مجموعهٔ $R$ و سیم‌پیچ اندازه‌گیری شده است؛ از نظر برداری:
+\[
+\tilde V_{RL}=\tilde V_R+\tilde V_L.
+\]
+پس مشابه بخش \lr{RL}:
+\[
+V_{RL}^2=V_R^2+V_L^2+2V_RV_L\cos\delta
+\quad\Rightarrow\quad
+\cos\delta=\frac{V_{RL}^2-V_R^2-V_L^2}{2V_RV_L}.
+\]
+با داده‌ها:
+\[
+\cos\delta=\frac{(8.14)^2-(2.09)^2-(7.59)^2}{2(2.09)(7.59)}\approx 0.135
+\quad\Rightarrow\quad
+\delta\approx 82.2^\circ.
+\]
+بنابراین:
+\[
+V_{r_L}\approx V_L\cos\delta \approx 7.59\times 0.135 \approx 1.02~\mathrm{V},
+\qquad
+V_{X_L}\approx V_L\sin\delta \approx 7.52~\mathrm{V}.
+\]
+و:
+\[
+r_L\approx \frac{1.02}{0.02004}\approx 50.6~\Omega,
+\qquad
+X_L\approx \frac{7.52}{0.02004}\approx 375~\Omega,
+\qquad
+L\approx \frac{375}{2\pi\times 50}\approx 1.19~\mathrm{H}.
+\]
+این مقدار $r_L$ با مقدار مدار \lr{RL} (حدود $39.5~\Omega$) هم‌مرتبه است و اختلاف می‌تواند ناشی از تغییر دمای سیم‌پیچ، خطای قرائت و غیرایده‌آلی‌های مؤثر باشد.
+
+\subsection{محاسبهٔ $X_C$ و $C$ از داده‌های \lr{RLC}}
+اگر خازن را تقریباً ایده‌آل بگیریم:
+\[
+X_C=\frac{V_C}{I}\approx \frac{3.22}{0.02004}\approx 160.7~\Omega
+\quad\Rightarrow\quad
+C\approx \frac{1}{2\pi f X_C}\approx 19.8~\mu\mathrm{F},
+\]
+که با مقدار به‌دست‌آمده در مدار \lr{RC} (حدود $20~\mu\mathrm{F}$) سازگار است.
+
+\subsection{امپدانس مدار و مقایسه با تئوری}
+امپدانس اندازه‌گیری‌شده:
+\[
+\abs{Z}_{\text{exp}}=\frac{V_Z}{I}\approx \frac{5.34}{0.02004}\approx 266.5~\Omega.
+\]
+
+برای مقایسهٔ تئوری، از مقادیر استخراج‌شده در بخش‌های قبل استفاده می‌کنیم (به‌عنوان نمونه: $R\approx 104~\Omega$، $r_L\approx 39.5~\Omega$، $L\approx 1.18~\mathrm{H}$، $C\approx 20.2~\mu\mathrm{F}$). در $f=50~\mathrm{Hz}$:
+\[
+X_L=\omega L\approx 2\pi(50)(1.18)\approx 371~\Omega,\qquad
+X_C=\frac{1}{\omega C}\approx 158~\Omega,
+\]
+پس:
+\[
+\abs{Z}_{\text{th}}=\sqrt{(R+r_L)^2+(X_L-X_C)^2}
+\approx \sqrt{(143.5)^2+(213)^2}\approx 257~\Omega.
+\]
+که با $\abs{Z}_{\text{exp}}\approx 266.5~\Omega$ اختلافی در حد چند درصد دارد.
+
+زاویهٔ فاز تئوری (با همین تقریب):
+\[
+\varphi_{\text{th}}\approx \arctan\!\left(\frac{X_L-X_C}{R+r_L}\right)\approx
+\arctan\!\left(\frac{213}{143.5}\right)\approx 56^\circ.
+\]
+چون $X_L>X_C$، مدار در $50~\mathrm{Hz}$ سلفی است و جریان از ولتاژ کلی عقب می‌افتد.
+
+\subsection{پاسخ پرسش‌های آزمایش}
+\textbf{۱) آیا $V_L$ بر $V_R$ عمود است؟}
+در مدل ایده‌آل باید عمود باشد، اما به‌علت وجود $r_L$، ولتاژ سیم‌پیچ مؤلفهٔ هم‌فاز دارد و زاویهٔ آن از $90^\circ$ کمتر می‌شود. در این بخش $\delta\approx 82^\circ$ به‌دست آمد.
+
+\textbf{۲) چرا مقاومت اهمی خازن را با این روش نمی‌توان دقیق استخراج کرد؟}
+برای استخراج مقاومت سریِ خازن (\lr{ESR}) باید بتوان مؤلفهٔ هم‌فازِ ولتاژ خازن را (که معمولاً بسیار کوچک است) از مؤلفهٔ کاملاً راکتیو جدا کرد. در این آزمایش فقط اندازهٔ $V_C$ اندازه‌گیری شده و اطلاعات کافی برای تجزیهٔ دقیق $V_C$ به مؤلفهٔ هم‌فاز و عمود (به‌ویژه وقتی \lr{ESR} کوچک است) وجود ندارد؛ علاوه‌بر آن، خطای دستگاه‌ها می‌تواند هم‌مرتبه با مؤلفهٔ هم‌فاز کوچک باشد. بنابراین تعیین \lr{ESR} به روش‌های دقیق‌تری (مانند پل‌های \lr{AC}، اندازه‌گیری پاسخ فرکانسی یا اندازه‌گیری مستقیم \lr{ESR}) نیاز دارد.
+
+\begin{figure}[h!]
+\caption{نمودار فازوری ولتاژها در مدار \lr{RLC} (بازسازی مطابق روش برداری)}
+\label{fig:phasorRLC}
+\centering
+\def\sc{0.7}
+\begin{tikzpicture}[>=Stealth]
+\coordinate (O) at (0,0);
+\coordinate (A) at ({\sc*2.09},0);                 % VR
+\coordinate (D) at ({\sc*2.09},{-\sc*3.22});        % VR+VC (tail-to-head)
+\coordinate (C) at ({\sc*(2.09 + 7.59*cos(82.2))},{\sc*(7.59*sin(82.2) - 3.22)}); % +VL
+
+\draw[->, thick, blue] (O) -- (A) node[below right] {$V_R$};
+\draw[->, thick, orange] (A) -- (D) node[right] {$V_C$};
+\draw[->, thick, ForestGreen] (O) -- (D) node[left] {$V_{RC}$};
+\draw[->, thick, red] (D) -- (C) node[above right] {$V_L$};
+\draw[->, thick, black] (O) -- (C) node[above] {$V_Z$};
+
+\draw[->] (0.65,0) arc (0:56:0.65);
+\node at (0.85,0.23) {$\varphi$};
+\end{tikzpicture}
+\end{figure}
+
+% =========================================================
+\section{بحث نهایی و جمع‌بندی}
+\begin{itemize}
+\item مقدار مقاومت $R$ استخراج‌شده از هر سه مدار نزدیک به $104~\Omega$ است و سازگاری درونی داده‌ها را تأیید می‌کند.
+\item با تحلیل فازوری مدار \lr{RL} مقاومت داخلی سیم‌پیچ در حدود $r_L\approx 39.5~\Omega$ و اندوکتانس حدود $L\approx 1.18~\mathrm{H}$ به‌دست آمد.
+\item با مدار \lr{RC} ظرفیت خازن حدود $C\approx 20~\mu\mathrm{F}$ به‌دست آمد و سازگاری برداری $V_Z^2\simeq V_R^2+V_C^2$ نشان داد خازن تقریباً ایده‌آل رفتار می‌کند.
+\item در مدار \lr{RLC}، چون $f=50~\mathrm{Hz}$ بزرگ‌تر از بسامد تشدیدِ تخمینی
+\[
+f_0=\frac{1}{2\pi\sqrt{LC}}\approx \frac{1}{2\pi\sqrt{(1.18)(20.2\times 10^{-6})}}\approx 33~\mathrm{Hz}
+\]
+است، مدار سلفی می‌شود ($X_L>X_C$) و جریان از ولتاژ عقب می‌افتد.
+\item امپدانس محاسبه‌شده از داده‌ها و امپدانس تئوری (با لحاظ $r_L$) اختلافی در حد چند درصد داشت که می‌تواند ناشی از مقاومت‌های سری/تماس، تلرانس قطعات، دمای سیم‌پیچ و خطای ابزار باشد.
+\end{itemize}
+
+\end{document}

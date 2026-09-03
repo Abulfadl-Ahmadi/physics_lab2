@@ -1,0 +1,36 @@
+\documentclass{article}
+\usepackage{filecontents}
+\usepackage{pgfplotstable}
+\usepackage{booktabs}
+
+\begin{document}
+
+% Table 1
+\begin{table}[h]
+\caption{Table 1: Current vs Voltage}
+\centering
+\pgfplotstabletypeset[
+    col sep=comma,
+    string type,
+    columns/I/.style={column name={\textbf{I (mA)}}},
+    columns/V/.style={column name={\textbf{V (V)}}},
+    every head row/.style={before row=\toprule,after row=\midrule},
+    every last row/.style={after row=\bottomrule}
+]{data1.csv}
+\end{table}
+
+% Table 2
+\begin{table}[h]
+\caption{Table 2: Current vs Voltage}
+\centering
+\pgfplotstabletypeset[
+    col sep=comma,
+    string type,
+    columns/I/.style={column name={\textbf{I (mA)}}},
+    columns/V/.style={column name={\textbf{V (V)}}},
+    every head row/.style={before row=\toprule,after row=\midrule},
+    every last row/.style={after row=\bottomrule}
+]{data2.csv}
+\end{table}
+
+\end{document}

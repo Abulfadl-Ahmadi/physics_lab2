@@ -1,0 +1,14 @@
+\begin{thebibliography}{1}
+
+\bibitem{feynman1964}
+R.~P. Feynman, R.~B. Leighton, and M.~Sands, {\em The Feynman Lectures on
+  Physics, Vol. II}.
+\newblock Addison-Wesley, 1964.
+
+\bibitem{codata2018}
+{CODATA Task Group on Fundamental Constants}, ``Codata recommended values of
+  the fundamental physical constants.''
+  \url{https://physics.nist.gov/constants}, 2018.
+\newblock National Institute of Standards and Technology.
+
+\end{thebibliography}

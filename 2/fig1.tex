@@ -1,0 +1,61 @@
+\documentclass[border=11pt]{standalone}
+\usepackage{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[american]
+    % اندازه کوچک‌تر قطعات برای جا شدن در فضای محدود و کوچک دیده شدن مقاومت‌ها
+    \ctikzset{bipoles/length=0.7cm}
+
+    % مختصات جدید: عرض از -4 تا 4 و ارتفاع از 4 تا -2
+    \coordinate (A) at (-4, 0);
+    \coordinate (B) at (4, 0);
+    \coordinate (M) at (0, 4);
+    \coordinate (N) at (0, 0);
+    \coordinate (TL) at (-4, 4); % بالا چپ
+    \coordinate (TR) at (4, 4);  % بالا راست
+    \coordinate (BL) at (-4, -2); % پایین چپ (تغییر یافته)
+    \coordinate (BR) at (4, -2);  % پایین راست (تغییر یافته)
+
+    % سیم‌های عمودی بیرونی
+    \draw (TL) -- (A) -- (BL);
+    \draw (TR) -- (B) -- (BR);
+
+    % شاخه بالا
+    \draw (TL) to[R, l_=$R_3$] (M);
+    \draw (M) to[R, l_=$R_2$] (TR);
+
+    % شاخه وسط
+    \draw (A) to[R, l_=$R_5$] (N);
+    \draw (N) to[R, l_=$R_1$] (B);
+
+    % شاخه عمودی وسط (نقطه میانی همچنان 2 است)
+    \draw (M) to[R, l_=$R_4$] (0, 1);
+	\draw[white] (0,0) -- (0,2);
+    \draw (0, 2.22) to[battery1, l^={$E_2, r_2$}] (N);
+
+    % شاخه پایین (روی خط y = -2)
+    \draw (BL) to[battery1, l_={$E_1, r_1$}] (BR);
+
+    % پیکان‌های جریان (دور از مقاومت‌ها روی سیم‌های خالی)
+    % بالا
+    \draw[-latex, thick] (-3.5, 4) -- (-3.2, 4) node[midway, above] {$I_3$};
+    \draw[-latex, thick] (3.5, 4) -- (3.2, 4) node[midway, above] {$I_2$};
+
+    % وسط
+    \draw[-latex, thick] (-3.5, 0) -- (-3.2, 0) node[midway, above] {$I_5$};
+    \draw[-latex, thick] (3.5, 0) -- (3.2, 0) node[midway, above] {$I_1$};
+
+    % عمودی (بالای مقاومت R4)
+    \draw[-latex, thick] (0, 3.5) -- (0, 3.8) node[midway, left] {$I_4$};
+
+    % پایین (روی y = -2)
+    \draw[-latex, thick] (-3.5, -2) -- (-3.2, -2) node[midway, above] {$I$};
+
+    % برچسب نقاط
+    \node[left] at (A) {A};
+    \node[right] at (B) {B};
+    \node[above] at (M) {M};
+    \node[below] at (N) {N};
+
+\end{circuitikz}
+\end{document}

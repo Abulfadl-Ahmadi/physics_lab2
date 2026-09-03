@@ -1,0 +1,618 @@
+
+\documentclass[a4paper, 11pt]{article}
+\usepackage[
+    top=0.75in,
+    bottom=1in,
+    left=0.75in,
+    right=0.75in
+]{geometry}
+\usepackage{graphicx, tabularx, hyperref, amsmath, wrapfig}
+\usepackage[usenames,dvipsnames]{color,xcolor}
+\usepackage{listings}
+\usepackage[siunitx]{circuitikz}
+\usepackage{booktabs}
+\usepackage{pgfplotstable, pgfplots}
+\linespread{1.2}
+\selectfont
+\usepackage{xepersian}
+% فونت گزارش‌کارهای قبلی «Dibaj» بوده است؛ برای جلوگیری از خطای کامپایل در سیستم‌هایی
+% که این فونت نصب نیست، یک جانشینِ سازگار تعریف می‌کنیم.
+\settextfont[Scale=0.9]{Dibaj}
+\setdigitfont[Scale=1]{Dibaj}
+
+\lstset{
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue},
+    commentstyle=\color{green!50!black},
+    stringstyle=\color{red!70!black},
+    numbers=left,
+    numberstyle=\tiny,
+    stepnumber=1,
+    breaklines=true,
+    frame=single
+}
+
+\begin{document}
+
+\begin{center}
+\textbf{{\huge گزارش‌کار آزمایش شمارهٔ ۷:
+بررسی ظرفیت خازن و اندازه‌گیری ضریب دی‌الکتریک}}
+\end{center}
+
+\hrule
+\noindent\begin{tabular}{rrl}
+اعضای گروه: & ابوالفضل احمدی & 403172283\\
+& نام و نام‌خانوادگی & 403001122
+\end{tabular}\hfill
+\begin{tabular}{rr}
+تاریخ انجام آزمایش: & 29/09/1404 \\
+دستیار آموزشی: & امیری‌نژاد \\
+\end{tabular}\hfill
+\begin{tabular}{rr}
+گروه:  & 3  \\
+زیرگروه: &  \lr{A}  \\
+\end{tabular}
+\hrule
+
+\section{اهداف و خلاصهٔ شرح آزمایش}
+
+در این آزمایش، با استفاده از یک خازن صفحه‌ای با صفحات دایره‌ای و فاصلهٔ قابل تنظیم، رابطهٔ
+\[
+C = \frac{K\varepsilon_0 A}{d}
+\]
+به‌صورت تجربی بررسی شد. در گام نخست، شکل موج خروجی نوسان‌ساز روی اسیلوسکوپ مشاهده شد و بسامدِ تنظیم‌شده با قرائت از روی صفحه کنترل گردید (در این مرحله طبق دستورکار دامنه روی $10~\mathrm{V}$ قرار گرفت). سپس برای مراحل اندازه‌گیری جریان، دامنهٔ ولتاژ روی مقدار ثابت $V_m=4~\mathrm{V}$ تنظیم شد و وابستگی جریان خازن به فرکانس و فاصلهٔ صفحات مطالعه گردید.
+
+\begin{itemize}
+    \item اندازه‌گیری بسامد خروجی نوسان‌ساز با اسیلوسکوپ و بررسی دقت قرائت بسامد از روی صفحهٔ اسیلوسکوپ.
+    \item تعیین ظرفیت خازن در حضور دی‌الکتریک (پلکسی) از روی شیب نمودار $I$ برحسب $f$ و محاسبهٔ ضریب دی‌الکتریک.
+    \item تعیین ظرفیت خازن در هوا و محاسبهٔ ضریب گذردهی هوا و مقایسه با $\varepsilon_0$.
+    \item بررسی وابستگی $C\propto 1/d$ از طریق رسم نمودار $I$ برحسب $1/d$ در فرکانس ثابت.
+\end{itemize}
+
+\textbf{خلاصهٔ نتایج:}
+برازش خطی داده‌های جدول (۱) و (۲) نشان داد که در ولتاژ ثابت، جریان با فرکانس رابطه‌ای خطی دارد. برای حالت دی‌الکتریک، شیب نمودار برابر
+$m_1=(4.245\pm 0.013)\,\mu\mathrm{A/kHz}$ و برای هوا
+$m_2=(1.041\pm 0.013)\,\mu\mathrm{A/kHz}$ به‌دست آمد. از این شیب‌ها ظرفیت‌ها به‌ترتیب
+$C_{\mathrm{plexi}}=(239\pm 1)\,\mathrm{pF}$ و $C_{\mathrm{air}}=(58.6\pm 0.7)\,\mathrm{pF}$
+محاسبه شد. با استفاده از هندسهٔ خازن و $d=2.8~\mathrm{mm}$، مقدار
+$K_{\mathrm{plexi}}=2.405\pm 0.007$ و
+$K_{\mathrm{air}}=0.590\pm 0.007$
+به‌دست آمد. همچنین نمودار $I$ برحسب $1/d$ در $f=14~\mathrm{kHz}$ تقریباً خطی بود و وابستگی معکوس ظرفیت به فاصله را تأیید کرد.
+
+\section{تئوری آزمایش}
+
+اگر اختلاف پتانسیل دو سر خازن به صورت
+\[
+V(t)=V_m\sin(\omega t)
+\]
+باشد، بار صفحات برابر است با
+\[
+q(t)=CV(t)=CV_m\sin(\omega t),
+\]
+و بنابراین جریان
+\[
+I(t)=\frac{dq}{dt}=C\omega V_m\cos(\omega t)=C\omega V_m\sin\!\left(\omega t+\frac{\pi}{2}\right).
+\]
+در نتیجه دامنهٔ جریان برابر است با $I_m=C\omega V_m$. از سوی دیگر، برای کمیت‌های مؤثر داریم
+\[
+V=\frac{V_m}{\sqrt{2}},\qquad I=\frac{I_m}{\sqrt{2}},
+\]
+و بنابراین رابطهٔ بین جریان مؤثر و فرکانس به صورت
+\begin{equation}
+I = \omega C V = 2\pi f\, C\, V
+\label{eq:I_f}
+\end{equation}
+خواهد بود. از رابطهٔ \eqref{eq:I_f} نتیجه می‌شود که اگر $V$ و $C$ ثابت باشند، نمودار $I$ برحسب $f$ خطی بوده و شیب آن برابر است با
+\begin{equation}
+\frac{dI}{df}=2\pi C V.
+\label{eq:slope}
+\end{equation}
+همچنین با جایگذاری ظرفیت خازن صفحه‌ای
+\[
+C = \frac{K\varepsilon_0 A}{d},
+\]
+در فرکانس و ولتاژ ثابت خواهیم داشت
+\[
+I \propto \frac{1}{d}.
+\]
+
+\section{اندازه‌گیری بسامد نوسان‌ساز با اسیلوسکوپ}
+
+مطابق دستورکار، خروجی نوسان‌ساز به ورودی اسیلوسکوپ متصل شد و شکل موج سینوسی مشاهده گردید. در این مرحله دامنهٔ ولتاژ روی $10~\mathrm{V}$ و بسامد روی $10~\mathrm{kHz}$ قرار داده شد و \lr{Time/Div} برابر $50~\mu\mathrm{s}$ تنظیم گردید تا یک دورهٔ تناوب روی صفحه به‌خوبی قابل تشخیص باشد. با شمارش تقسیمات افقی متناظر با یک دورهٔ تناوب، داریم:
+\[
+T = N\times(\mathrm{Time/Div}),\qquad f_{\mathrm{scope}}=\frac{1}{T}.
+\]
+برای $f\simeq 10~\mathrm{kHz}$ انتظار داریم $T\simeq 100~\mu\mathrm{s}$ و در نتیجه $N\simeq 2$ تقسیم باشد که با مشاهدهٔ شکل موج نیز سازگار بود.
+
+\paragraph{برآورد خطا و دلیل محدودیت دقت قرائت از روی اسیلوسکوپ}
+اگر دورهٔ تناوب از روی شبکهٔ صفحه خوانده شود، عدم‌قطعیت اصلی از دقت خواندن $N$ ناشی می‌شود. با تقریب مرتبهٔ اول:
+\[
+\frac{\delta f}{f}\simeq \frac{\delta T}{T}=\frac{\delta N}{N}.
+\]
+به‌عنوان یک برآورد محافظه‌کارانه، اگر $\delta N \sim 0.1$ تقسیم و $N\simeq 2$ باشد، خطای نسبی در حد چند درصد خواهد بود (حدود $5\%$). در عمل، اسیلوسکوپ دیجیتال مورد استفاده امکان اندازه‌گیری خودکار و پایدار بسامد را فراهم می‌کرد و (مطابق مشاهدهٔ حین آزمایش) اختلاف قابل توجهی با مقدار تنظیم‌شدهٔ نوسان‌ساز دیده نشد؛ از این رو در ادامه، فرکانس‌های تنظیم‌شدهٔ نوسان‌ساز به‌عنوان مقدار مرجع در تحلیل به‌کار رفت. پس از این مرحله، طبق دستورکار دامنهٔ نوسان‌ساز روی $4~\mathrm{V}$ تنظیم شد و برای جلوگیری از استهلاک، اسیلوسکوپ از مدار خارج گردید.
+
+
+\section{تعیین ضریب دی‌الکتریک پلکسی}
+
+در این بخش، ورقهٔ پلکسی با ضخامت $d=2.8~\mathrm{mm}$ بین صفحات خازن قرار گرفت و دامنهٔ ولتاژ نوسان‌ساز روی $V_m=4~\mathrm{V}$ تنظیم شد. سپس جریان برای فرکانس‌های مختلف اندازه‌گیری گردید.
+
+\begin{table}[h!]
+\caption{داده‌های $I$ برحسب $f$ در حضور دی‌الکتریک (پلکسی)}
+\label{tab:plexi}
+\centering
+\begin{tabular}{cc}
+\hline
+$f\;[\mathrm{kHz}]$ & $I\;[\mu\mathrm{A}]$ \\
+\hline
+$1$  & $4.53$ \\
+$5$  & $21.95$ \\
+$9$  & $39.06$ \\
+$10$ & $43.34$ \\
+$13$ & $56.28$ \\
+$17$ & $72.95$ \\
+$21$ & $89.70$ \\
+$25$ & $106.61$ \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{figure}[h]
+\caption{{$I$ برحسب $f$ (پلکسی)}}
+\label{fig:If_plexi}
+\centering
+\pgfplotsset{
+    width=9cm,
+    height=5cm,
+    scale only axis,
+    tick align = outside,
+    yticklabel style={/pgf/number format/fixed},
+}
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel={\lr{[$\mathrm{kHz}$]} فرکانس $f$},
+    ylabel={\lr{[$\mu\mathrm{A}$]} جریان $I$},
+    xmin=0, xmax=26,
+    ymin=0, ymax=110,
+    xtick distance=5,
+    ymajorgrids=true,
+    xmajorgrids=true,
+    grid style=dashed,
+    legend pos=north west,
+    mark size=2.5pt,
+]
+\addplot[
+    mark=square,
+    only marks
+]
+coordinates {
+    (1,4.53)
+    (5,21.95)
+    (9,39.06)
+    (10,43.34)
+    (13,56.28)
+    (17,72.95)
+    (21,89.70)
+    (25,106.61)
+};
+
+\addplot[
+    smooth,
+    domain=0:26,
+    samples=100
+]
+{ 4.245478475459282 * x + 0.7033342473265662 };
+
+\legend{تجربی داده‌های ,
+$ I = 4.245 f + 0.703 $}
+\end{axis}
+\end{tikzpicture}
+\end{figure}
+
+\subsection*{برازش خطی و محاسبهٔ ظرفیت}
+
+با توجه به رابطهٔ \eqref{eq:I_f}، داده‌ها با مدل خطی
+\[
+I = a f + b
+\]
+برازش داده می‌شوند (در این بخش $f$ برحسب \(\mathrm{kHz}\) و $I$ برحسب \(\mu\mathrm{A}\) است).
+فرمول‌های روش کمینهٔ مربعات برای $n$ نقطهٔ $(f_i,I_i)$ به صورت زیر است:
+\begin{align}
+a &= \frac{n\sum f_i I_i - \left(\sum f_i\right)\left(\sum I_i\right)}
+         {n\sum f_i^2 - \left(\sum f_i\right)^2}, \\
+b &= \frac{\left(\sum I_i\right)\left(\sum f_i^2\right) - \left(\sum f_i\right)\left(\sum f_i I_i\right)}
+         {n\sum f_i^2 - \left(\sum f_i\right)^2}.
+\end{align}
+
+برای داده‌های جدول \ref{tab:plexi} داریم:
+\begin{align}
+n &= 8,\\
+\sum f_i &= 101~\mathrm{kHz},\\
+\sum I_i &= 434.42~\mu\mathrm{A},\\
+\sum f_i^2 &= 1731~(\mathrm{kHz})^2,\\
+\sum f_i I_i &= 7419.96~(\mathrm{kHz}\cdot \mu\mathrm{A}).
+\end{align}
+پس:
+\begin{align}
+a_1 &= \frac{8(7419.96)- (101)(434.42)}{8(1731)-(101)^2}
+= 4.245~\mu\mathrm{A/kHz},\\
+b_1 &= \frac{(434.42)(1731)-(101)(7419.96)}{8(1731)-(101)^2}
+=0.703~\mu\mathrm{A}.
+\end{align}
+\subsection*{محاسبهٔ عدم‌قطعیتِ پارامترهای برازش}
+برای مدل خطی \(I=af+b\)، پس از تعیین \(a\) و \(b\)، باقیمانده‌ها به صورت
+\[
+r_i = I_i-(af_i+b)
+\]
+تعریف می‌شوند. مجموع مربعات باقیمانده‌ها
+\[
+\mathrm{SSE}=\sum_{i=1}^{n} r_i^2
+\]
+و برآورد واریانس خطا (در فرضِ هم‌پراکندگی) برابر است با
+\[
+s^2=\frac{\mathrm{SSE}}{n-2}.
+\]
+همچنین با تعریف
+\[
+S_{xx}=\sum_{i=1}^{n}(f_i-\bar f)^2,
+\qquad
+\bar f=\frac{1}{n}\sum_{i=1}^{n}f_i,
+\]
+عدم‌قطعیت آماری شیب و عرض از مبدأ از روابط استاندارد کمترین مربعات به‌دست می‌آید:
+\begin{equation}
+\sigma_a=\sqrt{\frac{s^2}{S_{xx}}},
+\qquad
+\sigma_b=\sqrt{s^2\left(\frac{1}{n}+\frac{\bar f^{\,2}}{S_{xx}}\right)}.
+\label{eq:unc_lin}
+\end{equation}
+
+برای داده‌های جدول \ref{tab:plexi}، با استفاده از \(a_1=4.245\) و \(b_1=0.703\) (با واحدهای \(\mu\mathrm{A}\) و \(\mathrm{kHz}\))، مقدارهای زیر به‌دست آمد:
+\[
+S_{xx}=455.875~(\mathrm{kHz})^2,\qquad
+\mathrm{SSE}=0.4627~(\mu\mathrm{A})^2,\qquad
+s^2=\frac{0.4627}{8-2}=0.07711~(\mu\mathrm{A})^2.
+\]
+در نتیجه از رابطهٔ \eqref{eq:unc_lin}:
+\[
+a_1=(4.245\pm 0.013)\,\mu\mathrm{A/kHz},
+\qquad
+b_1=(0.703\pm 0.191)\,\mu\mathrm{A}.
+\]
+
+\subsection*{انتشار خطا به ظرفیت}
+از رابطهٔ \eqref{eq:slope} داریم \(C=\dfrac{a}{2\pi V}\). در این تحلیل، ولتاژ مؤثر \(V\) (ناشی از تنظیم دامنه‌ی نوسان‌ساز) بدون عدم‌قطعیتِ مؤثر در نظر گرفته شده است و منبع غالبِ خطا، \(\sigma_a\) است. بنابراین:
+\begin{equation}
+\sigma_C=\left|\frac{\partial C}{\partial a}\right|\sigma_a=\frac{\sigma_a}{2\pi V},
+\qquad
+\frac{\sigma_C}{C}=\frac{\sigma_a}{a}.
+\label{eq:unc_C}
+\end{equation}
+
+
+اکنون با تبدیل واحدها و استفاده از \eqref{eq:slope}:
+\[
+a_1 = 4.245~\mu\mathrm{A/kHz} = 4.245\times 10^{-9}~\mathrm{A/Hz},
+\]
+و چون $V_m=4~\mathrm{V}$، ولتاژ مؤثر برابر است با
+\[
+V=\frac{V_m}{\sqrt{2}}=\frac{4}{\sqrt{2}}=2.828~\mathrm{V}.
+\]
+بنابراین ظرفیت:
+\begin{align}
+C_{\mathrm{plexi}} &= \frac{a_1}{2\pi V}
+= \frac{4.245\times 10^{-9}}{2\pi(2.828)} \ \mathrm{F} \nonumber\\
+&=2.39\times 10^{-10}\ \mathrm{F}
+\;\approx\; (239\pm 1)\ \mathrm{pF}.
+\end{align}
+طبق رابطهٔ \eqref{eq:unc_C}، با \(\sigma_{a_1}=0.013~\mu\mathrm{A/kHz}=1.3\times 10^{-11}~\mathrm{A/Hz}\) و \(V=2.828~\mathrm{V}\):
+\[
+\sigma_{C_{\mathrm{plexi}}}=\frac{1.3\times 10^{-11}}{2\pi(2.828)}=7.3\times 10^{-13}\ \mathrm{F}\approx 0.7~\mathrm{pF},
+\]
+که با گرد کردن مناسب همان \((239\pm 1)\,\mathrm{pF}\) گزارش می‌شود.
+
+
+
+\subsection*{محاسبهٔ ضریب دی‌الکتریک}
+
+طبق مشخصات خازن صفحه‌ای، شعاع صفحات $r=10~\mathrm{cm}$ بوده و
+\[
+A=\pi r^2=\pi(0.10)^2=3.1416\times 10^{-2}\ \mathrm{m^2}.
+\]
+همچنین $d=2.8~\mathrm{mm}=2.8\times 10^{-3}\ \mathrm{m}$ و
+\[
+\varepsilon_0 = 8.854\times 10^{-12}\ \mathrm{F/m}.
+\]
+در نتیجه:
+\begin{align}
+K_{\mathrm{plexi}} &= \frac{C_{\mathrm{plexi}} d}{\varepsilon_0 A}
+= \frac{(2.39\times 10^{-10})(2.8\times 10^{-3})}
+{(8.854\times 10^{-12})(3.1416\times 10^{-2})} \nonumber\\
+&= 2.405 \pm 0.007.
+\end{align}
+از آن‌جا که \(K\propto C\) و سایر کمیت‌ها ثابت فرض شده‌اند، انتشار خطا به‌صورت
+\[
+\sigma_K = K\,\frac{\sigma_C}{C}
+\]
+است. بنابراین با \(\sigma_{C_{\mathrm{plexi}}}\approx 0.7~\mathrm{pF}\) و \(C_{\mathrm{plexi}}=239~\mathrm{pF}\)، عدم‌قطعیت \(K\) در حد \(7\times 10^{-3}\) به‌دست می‌آید.
+
+
+
+\section{تعیین ضریب گذردهی هوا و مقایسه با خلأ}
+
+در این بخش، پلکسی خارج شد و فاصلهٔ صفحات روی $d=2.8~\mathrm{mm}$ تنظیم گردید. سپس با ثابت نگه‌داشتن دامنهٔ ولتاژ روی $V_m=4~\mathrm{V}$، جریان برای فرکانس‌های مختلف اندازه‌گیری شد.
+
+\begin{table}[h!]
+\caption{داده‌های $I$ برحسب $f$ در هوا}
+\label{tab:air}
+\centering
+\begin{tabular}{cc}
+\hline
+$f\;[\mathrm{kHz}]$ & $I\;[\mu\mathrm{A}]$ \\
+\hline
+$1$  & $1.02$ \\
+$5$  & $5.25$ \\
+$9$  & $9.50$ \\
+$13$ & $13.73$ \\
+$17$ & $17.18$ \\
+$21$ & $22.05$ \\
+$25$ & $26.14$ \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{figure}[h]
+\caption{{$I$ برحسب $f$ (هوا)}}
+\label{fig:If_air}
+\centering
+\pgfplotsset{
+    width=9cm,
+    height=5cm,
+    scale only axis,
+    tick align = outside,
+    yticklabel style={/pgf/number format/fixed},
+}
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel={\lr{[$\mathrm{kHz}$]} فرکانس $f$},
+    ylabel={\lr{[$\mu\mathrm{A}$]} جریان $I$},
+    xmin=0, xmax=26,
+    ymin=0, ymax=28,
+    xtick distance=5,
+    ymajorgrids=true,
+    xmajorgrids=true,
+    grid style=dashed,
+    legend pos=north west,
+    mark size=2.5pt,
+]
+\addplot[
+    mark=square,
+    only marks
+]
+coordinates {
+    (1,1.02)
+    (5,5.25)
+    (9,9.50)
+    (13,13.73)
+    (17,17.18)
+    (21,22.05)
+    (25,26.14)
+};
+
+\addplot[
+    smooth,
+    domain=0:26,
+    samples=100
+]
+{ 1.0414285714285714 * x + 0.014285714285716011 };
+
+\legend{تجربی داده‌های ,
+$ I = 1.041 f + 0.014 $}
+\end{axis}
+\end{tikzpicture}
+\end{figure}
+
+\subsection*{برازش خطی و محاسبهٔ ظرفیت}
+
+برای داده‌های جدول \ref{tab:air} داریم:
+\begin{align}
+n &= 7,\\
+\sum f_i &= 91~\mathrm{kHz},\\
+\sum I_i &= 94.87~\mu\mathrm{A},\\
+\sum f_i^2 &= 1631~(\mathrm{kHz})^2,\\
+\sum f_i I_i &= 1699.87~(\mathrm{kHz}\cdot \mu\mathrm{A}).
+\end{align}
+بنابراین:
+\begin{align}
+a_2 &= \frac{7(1699.87)- (91)(94.87)}{7(1631)-(91)^2}
+= 1.041~\mu\mathrm{A/kHz},\\
+b_2 &= \frac{(94.87)(1631)-(91)(1699.87)}{7(1631)-(91)^2}
+=0.014~\mu\mathrm{A},
+\end{align}
+و برای برآورد عدم‌قطعیت‌ها، از همان روابط \eqref{eq:unc_lin} استفاده می‌شود. با محاسبهٔ باقیمانده‌ها، به‌دست آمد:
+\[
+S_{xx}=448.0~(\mathrm{kHz})^2,\qquad
+\mathrm{SSE}=0.3718~(\mu\mathrm{A})^2,\qquad
+s^2=\frac{0.3718}{7-2}=0.07437~(\mu\mathrm{A})^2.
+\]
+در نتیجه:
+\[
+a_2=(1.041\pm 0.013)\,\mu\mathrm{A/kHz},
+\qquad
+b_2=(0.014\pm 0.197)\,\mu\mathrm{A}.
+\]
+ظرفیت متناظر:
+\begin{align}
+C_{\mathrm{air}} &= \frac{a_2}{2\pi V}
+= \frac{1.041\times 10^{-9}}{2\pi(2.828)} \ \mathrm{F} \nonumber\\
+&= 5.86\times 10^{-11}\ \mathrm{F}
+\;\approx\; (58.6\pm 0.7)\ \mathrm{pF}.
+\end{align}
+همچنین طبق رابطهٔ \eqref{eq:unc_C}:
+\[
+\sigma_{C_{\mathrm{air}}}=\frac{\sigma_{a_2}}{2\pi V}
+=\frac{1.288\times 10^{-11}}{2\pi(2.828)}=7.3\times 10^{-13}\ \mathrm{F}\approx 0.7~\mathrm{pF},
+\]
+که با گرد کردن مناسب همان \((58.6\pm 0.7)\,\mathrm{pF}\) گزارش می‌شود.
+
+
+
+\subsection*{محاسبهٔ ضریب گذردهی هوا و مقایسه}
+
+از رابطهٔ $C=\varepsilon A/d$ داریم:
+\[
+\varepsilon_{\mathrm{air}}=\frac{C_{\mathrm{air}}d}{A}.
+\]
+بنابراین:
+\begin{align}
+\varepsilon_{\mathrm{air}} &=
+\frac{(5.86\times 10^{-11})(2.8\times 10^{-3})}{3.1416\times 10^{-2}}
+=5.22\times 10^{-12}\ \mathrm{F/m}.
+\end{align}
+همچنین:
+\[
+K_{\mathrm{air}}=\frac{\varepsilon_{\mathrm{air}}}{\varepsilon_0}
+=0.590\pm 0.007.
+\]
+با فرض ثابت بودن \(A\) و \(d\)، چون \(\varepsilon_{\mathrm{air}}=\dfrac{C_{\mathrm{air}}d}{A}\)، داریم
+\[
+\frac{\sigma_{\varepsilon}}{\varepsilon_{\mathrm{air}}}=\frac{\sigma_{C_{\mathrm{air}}}}{C_{\mathrm{air}}},
+\qquad
+\frac{\sigma_{K_{\mathrm{air}}}}{K_{\mathrm{air}}}=\frac{\sigma_{C_{\mathrm{air}}}}{C_{\mathrm{air}}},
+\]
+که منجر به \(\sigma_{K_{\mathrm{air}}}\approx 0.007\) می‌شود.
+
+در مقایسه با مقدار مرجع $\varepsilon_0=8.854\times 10^{-12}\ \mathrm{F/m}$، میزان اختلاف‌شنا به درصد برابر است با:
+\[
+\frac{|\varepsilon_{\mathrm{air}}-\varepsilon_0|}{\varepsilon_0}\times 100
+\approx 41\%.
+\]
+
+\subsection*{نکتهٔ مقایسه‌ای مستقل از هندسه}
+از آن‌جا که در دو اندازه‌گیریِ جدول‌های \ref{tab:plexi} و \ref{tab:air} ولتاژ یکسان و فاصلهٔ صفحات یکسان بوده است، نسبت ظرفیت‌ها مستقیماً از نسبت شیب‌ها به‌دست می‌آید:
+\[
+\frac{C_{\mathrm{plexi}}}{C_{\mathrm{air}}}=\frac{a_1}{a_2}=4.08\pm 0.05.
+\]
+عدم‌قطعیت این نسبت از انتشار خطا برای خارج‌قسمت به‌دست می‌آید:
+\[
+R=\frac{a_1}{a_2},
+\qquad
+\frac{\sigma_R}{R}=\sqrt{\left(\frac{\sigma_{a_1}}{a_1}\right)^2+\left(\frac{\sigma_{a_2}}{a_2}\right)^2},
+\]
+که با \(\sigma_{a_1}=0.013\) و \(\sigma_{a_2}=0.013\) منجر به \(\sigma_R\simeq 0.05\) می‌شود.
+
+این نسبت، مستقل از $A$ و $d$ است و نشان می‌دهد حضور دی‌الکتریک، ظرفیت را حدوداً چهار برابر افزایش داده است.
+
+\section{بررسی وابستگی جریان به فاصلهٔ صفحات در فرکانس ثابت}
+
+در این بخش، فرکانس روی $f=14~\mathrm{kHz}$ ثابت شد و فاصلهٔ صفحات تغییر داده شد. مطابق رابطهٔ \eqref{eq:I_f} و ظرفیت خازن صفحه‌ای، انتظار می‌رود:
+\[
+I = \left(2\pi f V \varepsilon A\right)\frac{1}{d},
+\]
+بنابراین نمودار $I$ برحسب $1/d$ باید خطی باشد.
+
+\begin{table}[h!]
+\caption{داده‌های $I$ برحسب $d$ در $f=14~\mathrm{kHz}$}
+\label{tab:d}
+\centering
+\begin{tabular}{cc}
+\hline
+$d\;[\mathrm{mm}]$ & $I\;[\mu\mathrm{A}]$ \\
+\hline
+$3$ & $14.22$ \\
+$4$ & $12.34$ \\
+$5$ & $10.96$ \\
+$6$ & $9.90$ \\
+$7$ & $9.05$ \\
+$8$ & $8.37$ \\
+$9$ & $7.78$ \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{figure}[h]
+\caption{{$I$ برحسب $1/d$ در $f=14~\mathrm{kHz}$}}
+\label{fig:Id}
+\centering
+\pgfplotsset{
+    width=9cm,
+    height=5cm,
+    scale only axis,
+    tick align = outside,
+    yticklabel style={/pgf/number format/fixed},
+}
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel={\lr{[$\mathrm{mm^{-1}}$]} $1/d$},
+    ylabel={\lr{[$\mu\mathrm{A}$]} جریان $I$},
+    xmin=0.10, xmax=0.35,
+    ymin=0, ymax=20,
+    ymajorgrids=true,
+    xmajorgrids=true,
+    grid style=dashed,
+    legend pos=north west,
+    mark size=2.5pt,
+]
+\addplot[
+    mark=square,
+    only marks
+]
+coordinates {
+    (0.3333,14.22)
+    (0.2500,12.34)
+    (0.2000,10.96)
+    (0.1667,9.90)
+    (0.1429,9.05)
+    (0.1250,8.37)
+    (0.1111,7.78)
+};
+
+\addplot[
+    smooth,
+    domain=0.10:0.35,
+    samples=100
+]
+{ 28.92326622971849 * x + 4.883128197090294 };
+
+\legend{تجربی داده‌های ,
+$ I = 28.92(1/d) + 4.88 $}
+\end{axis}
+\end{tikzpicture}
+\end{figure}
+
+\subsection*{برازش خطی}
+برای برازش \(I=a(1/d)+b\) (با \(d\) برحسب میلی‌متر و در نتیجه \(x=1/d\) برحسب \(\mathrm{mm^{-1}}\))، پارامترهای برازش و عدم‌قطعیت‌ها همانند روابط \eqref{eq:unc_lin} محاسبه می‌شوند، با این تفاوت که \(x_i=1/d_i\) است. در این حالت:
+\[
+S_{xx}=\sum (x_i-\bar x)^2,\qquad
+\mathrm{SSE}=\sum (I_i-a x_i-b)^2,\qquad
+s^2=\frac{\mathrm{SSE}}{n-2}.
+\]
+برای داده‌های جدول \ref{tab:d} به‌دست آمد:
+\[
+S_{xx}=3.746\times 10^{-2}~(\mathrm{mm^{-1}})^2,\qquad
+\mathrm{SSE}=0.3857~(\mu\mathrm{A})^2,\qquad
+s^2=0.07714~(\mu\mathrm{A})^2.
+\]
+در نتیجه:
+\[
+a_3 = (28.9\pm 1.4)\ \mu\mathrm{A\cdot mm},\qquad
+b_3 = (4.88\pm 0.29)\ \mu\mathrm{A}.
+\]
+خطی بودن نمودار (با وجود عرض از مبدأ غیرصفر) مؤید وابستگی تقریبی $I\propto 1/d$ در بازهٔ فاصله‌های بررسی‌شده است. عرض از مبدأ می‌تواند ناشی از ظرفیت‌ها و کوپلاژهای پراکندهٔ مدار و همچنین ناایده‌آل بودن میدان در لبه‌های صفحات باشد.
+
+\section*{پرسش‌ها}
+
+\paragraph{1}
+چگونه می‌توان جریان را با اسیلوسکوپ اندازه‌گیری کرد؟
+
+روش متداول، قرار دادن یک مقاومت مرجع کوچک $R$ در مسیر جریان و اندازه‌گیری ولتاژ دو سر آن با اسیلوسکوپ است. در این حالت با استفاده از قانون اهم:
+\[
+I(t)=\frac{V_R(t)}{R},
+\]
+و از روی دامنه یا مقدار مؤثر ولتاژ اندازه‌گیری‌شده می‌توان جریان متناظر را به‌دست آورد.
+
+\paragraph{2}
+خطاهای آزمایش را بررسی کرده و دلایل آن را ذکر کنید.
+
+مهم‌ترین منابع خطا در این آزمایش شامل: اثر میدان‌های کناری و عدم یکنواختی میدان بین صفحات (به‌ویژه در فاصله‌های کوچک)، موازی نبودن کامل صفحات، خطای تنظیم فاصلهٔ صفحات (از جمله خطای صفر ریزسنج)، ظرفیت‌های پراکندهٔ سیم‌ها و ابزارها، و محدودیت دقت آمپرمتر در جریان‌های کوچک است. همچنین هرگونه اختلاف بین ولتاژ تنظیم‌شده و ولتاژ واقعی دو سر خازن، به‌صورت یک خطای سیستماتیک در مقیاس جریان ظاهر می‌شود و می‌تواند سبب اختلاف در مقدار مطلق $\varepsilon_{\mathrm{air}}$ گردد.
+
+
+\end{document}

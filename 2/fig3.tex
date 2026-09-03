@@ -1,0 +1,60 @@
+\documentclass[border=11pt]{standalone}
+\usepackage{circuitikz}
+
+\tikzset{
+    galvanometer/.style={rmeter, t=G}
+}
+
+\begin{document}
+\begin{circuitikz}[european]
+
+    % تعریف استایل برای مربع‌های نقطه‌دار (ترمینال‌ها)
+    \tikzset{
+	        dotnode/.pic={
+            \draw (-0.4,-0.4) rectangle (0.4,0.4);
+            \foreach \x in {-0.25, 0, 0.25}
+                \foreach \y in {-0.25, 0, 0.25}
+                    \fill (\x, \y) circle (0.05);
+        }
+    }
+
+    % رسم مربع‌های نقطه‌دار در نقاط مشخص
+    \pic at (-4, 4) {dotnode}; % بالا چپ
+    \pic at (4, 4) {dotnode};  % بالا راست
+    \pic at (0, 4) {dotnode};  % M
+    \pic at (-4, 0) {dotnode}; % A
+    \pic at (0, 0) {dotnode};  % N
+    \pic at (4, 0) {dotnode};  % B
+
+	\draw (-4, 3.8) -- (-4, 0.2);
+	\draw (4, 3.8) -- (4, 0.2);
+
+    % برچسب‌گذاری نقاط
+    \node[above] at (0, 4.5) {M};
+    \node[left] at (-4.5, 0) {A};
+    \node[below] at (0, -0.5) {N};
+    \node[right] at (4.5, 0) {B};
+
+    % سیم‌های بالایی
+    \draw (-3.8, 4) to[R, l_=$R_3$] (-0.2, 4);
+    \draw (0.2, 4) to[R, l_=$R_2$] (3.8, 4);
+
+
+    % سیم‌های میانی
+    \draw (-3.8, 0) to[R, l_=$R_x$] (-0.2, 0);
+    \draw (0.2, 0) to[R, l_=$R_1$] (3.8, 0);
+
+    % شاخه عمودی (R4 و V2)
+
+    % شاخه پایین (باتری V1)
+    \draw (-4, -0.2) -- (-4, -2);
+    \draw (4, -0.2) -- (4, -2);
+    \draw (-4, -2) to[battery1, l_=$V_1$] (4, -2);
+
+    \draw (0, 4) to[galvanometer, l_=$G$] (0, 0);
+	\draw[white] (-1.425, 0) -- (-1, 0);
+    \draw[-latex] (-1, 0) to[out=180, in=0] (-1.7, 0.5) to[out=180, in=90] (-2, 0.2);
+
+
+\end{circuitikz}
+\end{document}
